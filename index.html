@@ -1,0 +1,3873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Eleitoral RJ 2026 - Votação por Candidato, Bairro, Zona e Local</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #0f172a;
+            --primary-light: #eff6ff;
+            --accent: #2563eb;
+            --accent-green: #059669;
+            --accent-amber: #d97706;
+            --accent-red: #dc2626;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-bottom: 80px;
+        }
+
+        /* Top Navbar */
+        nav {
+            background: linear-gradient(135deg, #091222 0%, #1e3a8a 100%);
+            color: #ffffff;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .brand-icon {
+            font-size: 28px;
+            line-height: 1;
+        }
+
+        .brand-title h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-badge {
+            background-color: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+
+        .brand-title p {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-link-btn {
+            background: transparent;
+            border: none;
+            color: #cbd5e1;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-link-btn:hover, .nav-link-btn.active {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-excel {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(5, 150, 105, 0.3);
+        }
+
+        .btn-excel:hover {
+            background: #065f46;
+            transform: translateY(-1px);
+        }
+
+        .btn-history {
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+            position: relative;
+        }
+
+        .btn-history:hover {
+            background: #312e81;
+            transform: translateY(-1px);
+        }
+
+        .btn-pdf {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.3);
+        }
+
+        .btn-pdf:hover {
+            background: #991b1b;
+            transform: translateY(-1px);
+        }
+
+        .btn-reset {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-reset:hover {
+            background-color: rgba(255, 255, 255, 0.22);
+        }
+
+        .badge-count {
+            background-color: #f59e0b;
+            color: #000;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 9999px;
+            margin-left: 4px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1440px;
+            margin: 24px auto;
+            padding: 0 24px;
+        }
+
+        /* Section Layouts */
+        .site-section {
+            display: none;
+        }
+
+        .site-section.active {
+            display: block;
+        }
+
+        /* Quick Region Pills Bar */
+        .region-pills-bar {
+            background-color: white;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            padding: 12px 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            overflow-x: auto;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .region-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .pill-btn {
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 9999px;
+            border: 1px solid var(--border);
+            background-color: #f8fafc;
+            color: var(--text-main);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s;
+        }
+
+        .pill-btn:hover {
+            background-color: var(--primary-light);
+            color: var(--accent);
+            border-color: #bfdbfe;
+        }
+
+        /* Card */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        /* Filter Grid */
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-top: 14px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            position: relative;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            padding: 9px 12px;
+            font-size: 13px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background-color: #fff;
+            color: var(--text-main);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        /* Autocomplete dropdown */
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            max-height: 320px;
+            overflow-y: auto;
+            z-index: 200;
+            margin-top: 4px;
+        }
+
+        .autocomplete-item {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            transition: background 0.15s;
+        }
+
+        .autocomplete-item:hover, .autocomplete-item.selected {
+            background-color: var(--primary-light);
+        }
+
+        .autocomplete-item .cand-badge {
+            background: #e0e7ff;
+            color: #3730a3;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 8px;
+        }
+
+        .autocomplete-item .cand-votes {
+            font-weight: 800;
+            color: var(--text-muted);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* Candidate Highlight Card */
+        .cand-info-box {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .cand-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .cand-badge-num {
+            background-color: rgba(255, 255, 255, 0.22);
+            font-size: 28px;
+            font-weight: 900;
+            padding: 6px 16px;
+            border-radius: 8px;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cand-details h2 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .cand-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .cand-tag {
+            background-color: rgba(255, 255, 255, 0.2);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .cand-stat-main {
+            text-align: right;
+        }
+
+        .cand-stat-main .stat-val {
+            font-size: 34px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .cand-stat-main .stat-lbl {
+            font-size: 12px;
+            color: #bfdbfe;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .btn-clear-cand {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-clear-cand:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* KPI Cards Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .kpi-card {
+            background-color: white;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            padding: 16px 18px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--accent);
+        }
+
+        .kpi-card.green::before { background-color: var(--accent-green); }
+        .kpi-card.amber::before { background-color: var(--accent-amber); }
+        .kpi-card.blue::before { background-color: var(--accent); }
+
+        .kpi-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .kpi-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 4px 0 2px 0;
+            word-break: break-word;
+        }
+
+        .kpi-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chart-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .bar-chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 420px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            gap: 12px;
+        }
+
+        .bar-label {
+            width: 170px;
+            min-width: 170px;
+            text-align: right;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .bar-label:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .bar-track {
+            flex-grow: 1;
+            background-color: #f1f5f9;
+            height: 22px;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+            border-radius: 6px;
+            transition: width 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            padding-left: 8px;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .bar-val {
+            min-width: 80px;
+            text-align: right;
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 13px;
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #f8fafc;
+            border-bottom: 2px solid var(--border);
+        }
+
+        th {
+            padding: 10px 14px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th:hover {
+            color: var(--primary);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.15s;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        td {
+            padding: 10px 14px;
+            color: var(--text-main);
+        }
+
+        .td-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background-color: var(--primary-light);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 11px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .page-btns {
+            display: flex;
+            gap: 6px;
+        }
+
+        .page-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: white;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-dialog {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+
+        .modal-overlay.open .modal-dialog {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            padding: 18px 24px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-body {
+            padding: 20px 24px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0f172a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Methodology & Downloads Section */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .info-box {
+            background-color: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .info-box h3 {
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 6px;
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-light);
+            color: var(--accent);
+            border-color: #93c5fd;
+        }
+
+        /* Comparator Styles */
+        .compare-header-box {
+            background: linear-gradient(135deg, #091222 0%, #1e3a8a 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .compare-preset-btn {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 9999px;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .compare-preset-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .compare-cand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .compare-cand-pill {
+            background: white;
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid #cbd5e1;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s;
+        }
+
+        .compare-cand-pill .cand-badge-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            font-weight: 900;
+            color: white;
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+
+        .compare-cand-pill .remove-cand-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.15s;
+        }
+
+        .compare-cand-pill .remove-cand-btn:hover {
+            color: #ef4444;
+            background: #fee2e2;
+        }
+
+        .compare-kpi-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .compare-stat-card {
+            background: white;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            padding: 16px 18px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--accent);
+            position: relative;
+        }
+
+        .compare-toggle-btn {
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: white;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .compare-toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .winner-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .grouped-bar-container {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-height: 450px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .grouped-bar-item {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+        }
+
+        .grouped-bar-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .grouped-bar-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .grouped-single-bar {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            gap: 8px;
+        }
+
+        .grouped-single-bar .c-name {
+            width: 110px;
+            min-width: 110px;
+            text-align: right;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 700;
+        }
+
+        .grouped-single-bar .c-track {
+            flex-grow: 1;
+            background: #e2e8f0;
+            height: 18px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .grouped-single-bar .c-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .grouped-single-bar .c-val {
+            min-width: 75px;
+            text-align: right;
+            font-weight: 800;
+        }
+
+        /* Print Mode */
+        @media print {
+            body { background: white !important; padding: 0 !important; }
+            nav, .region-pills-bar, .filter-card, .pagination, .no-print, .modal-overlay, .toast { display: none !important; }
+            .site-section { display: none !important; }
+            .site-section.active { display: block !important; }
+            #section-about { display: none !important; }
+            .card { box-shadow: none !important; border: 1px solid #cbd5e1 !important; break-inside: avoid; margin-bottom: 16px !important; }
+            .cand-info-box { background: #f8fafc !important; color: black !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; }
+            .cand-badge-num { background: #e2e8f0 !important; color: black !important; }
+            .cand-tag { background: #cbd5e1 !important; color: black !important; }
+            .cand-stat-main .stat-lbl { color: #64748b !important; }
+            .charts-grid { grid-template-columns: 1fr 1fr !important; break-inside: avoid; }
+            .bar-chart-container { max-height: none !important; overflow: visible !important; }
+            .bar-track { background-color: #e2e8f0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .bar-fill { background: #1e3a8a !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            table { font-size: 10px !important; }
+            td, th { padding: 4px 6px !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <div class="nav-container">
+        <div class="brand" onclick="switchNav('dashboard')">
+            <span class="brand-icon">🗳️</span>
+            <div class="brand-title">
+                <h1>Portal Eleitoral RJ 2026 <span class="brand-badge">TSE Oficial</span></h1>
+                <p>Dashboard Analítico de Votação por Bairro, Zona e Local</p>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <button class="nav-link-btn active" id="nav-btn-dashboard" onclick="switchNav('dashboard')">
+                📊 Dashboard Analítico
+            </button>
+            <button class="nav-link-btn" id="nav-btn-compare" onclick="switchNav('compare')">
+                ⚖️ Comparador
+            </button>
+            <button class="nav-link-btn" id="nav-btn-ranking" onclick="switchNav('ranking')">
+                🏅 Ranking Estadual
+            </button>
+            <button class="nav-link-btn" id="nav-btn-about" onclick="switchNav('about')">
+                ℹ️ Base TSE & Downloads
+            </button>
+        </div>
+
+        <div class="nav-actions no-print">
+            <!-- Save to Notebook Button -->
+            <button class="btn btn-history" onclick="openHistoryModal()" title="Ver histórico de pesquisas salvas">
+                📋 Caderno de Pesquisas <span class="badge-count" id="history-badge">0</span>
+            </button>
+
+            <!-- Instant Excel Export of current query -->
+            <button class="btn btn-excel" onclick="exportCurrentSearchToExcel()" title="Baixar planilha Excel (.csv) com todos os dados da pesquisa atual">
+                📥 Baixar Planilha
+            </button>
+
+            <!-- PDF Report -->
+            <button class="btn btn-pdf" onclick="window.print()" title="Imprimir ou Salvar em PDF">
+                📄 Relatório PDF
+            </button>
+
+            <button class="btn btn-reset" onclick="resetFilters()">
+                🔄 Limpar
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+
+    <!-- Quick Region Filter Pills -->
+    <div class="region-pills-bar no-print">
+        <span class="region-label">Acesso Rápido:</span>
+        <button class="pill-btn" onclick="quickFilterBairro('BARRA DA TIJUCA')">Barra da Tijuca</button>
+        <button class="pill-btn" onclick="quickFilterBairro('RECREIO')">Recreio</button>
+        <button class="pill-btn" onclick="quickFilterBairro('CAMPO GRANDE')">Campo Grande</button>
+        <button class="pill-btn" onclick="quickFilterBairro('TAQUARA')">Taquara / Jacarepaguá</button>
+        <button class="pill-btn" onclick="quickFilterBairro('BANGU')">Bangu</button>
+        <button class="pill-btn" onclick="quickFilterBairro('COPACABANA')">Copacabana</button>
+        <button class="pill-btn" onclick="quickFilterBairro('TIJUCA')">Tijuca</button>
+        <button class="pill-btn" onclick="quickFilterBairro('MADUREIRA')">Madureira</button>
+        <button class="pill-btn" onclick="quickFilterMun('NITER')">Niterói</button>
+        <button class="pill-btn" onclick="quickFilterMun('DUQUE DE CAXIAS')">Duque de Caxias</button>
+        <button class="pill-btn" onclick="quickFilterMun('GON')">São Gonçalo</button>
+    </div>
+
+    <!-- SECTION 1: DASHBOARD ANALÍTICO -->
+    <section id="section-dashboard" class="site-section active">
+        <!-- Filter Card -->
+        <div class="card filter-card no-print">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <h3 style="font-size:16px; font-weight:800; color:var(--text-main);">🔍 Painel de Filtros e Pesquisa Territorial</h3>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button class="pill-btn" style="background:#ecfdf5; color:#047857; border-color:#a7f3d0;" onclick="saveCurrentSearchToHistory()">
+                        ⭐ Salvar Pesquisa na Planilha Consolidada
+                    </button>
+                    <span id="total-registros-badge" style="font-size:12px; font-weight:700; color:var(--accent);">Carregando base eleitoral...</span>
+                </div>
+            </div>
+
+            <!-- Row 1: Candidate & Political Filters -->
+            <div class="filter-grid" style="margin-top:14px;">
+                <div class="form-group">
+                    <label for="filter-cargo">Cargo</label>
+                    <select id="filter-cargo" class="form-control" onchange="onCargoChange()">
+                        <option value="TODOS">Todos os Cargos</option>
+                        <option value="Governador">Governador</option>
+                        <option value="Senador">Senador</option>
+                        <option value="Deputado Federal">Deputado Federal</option>
+                        <option value="Deputado Estadual">Deputado Estadual</option>
+                    </select>
+                </div>
+
+                <div class="form-group" style="grid-column: span 2;">
+                    <label for="cand-search-input">Pesquisar Candidato (Nome ou Número)</label>
+                    <div style="position:relative; width:100%;">
+                        <input type="text" id="cand-search-input" class="form-control" placeholder="Digite número ou nome do candidato (ex: 1177, Dr Luizinho, Freixo...)" autocomplete="off" oninput="onCandidateSearchInput()" onkeydown="onCandidateSearchKeyDown(event)" onfocus="onCandidateSearchInput()">
+                        <button id="cand-clear-btn" style="position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; font-size:16px; color:#94a3b8; cursor:pointer; display:none;" onclick="clearCandidateSelection()" title="Limpar Candidato">✕</button>
+                        <div id="cand-autocomplete-list" class="autocomplete-dropdown" style="display:none;"></div>
+                    </div>
+                    <select id="filter-candidato" class="form-control" style="margin-top:6px; font-size:12px;" onchange="onCandidateSelectDropdown()">
+                        <option value="">Ou selecione da lista completa...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-partido">Partido</label>
+                    <select id="filter-partido" class="form-control" onchange="applyFilters()">
+                        <option value="TODOS">Todos os Partidos</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Row 2: Territorial & Polling Station Filters -->
+            <div class="filter-grid" style="margin-top:12px; border-top:1px dashed var(--border); padding-top:14px;">
+                <div class="form-group">
+                    <label for="filter-municipio">1. Município</label>
+                    <select id="filter-municipio" class="form-control" onchange="onMunicipioChange()">
+                        <option value="TODOS">Todos os 92 Municípios</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-zona">2. Zona Eleitoral</label>
+                    <select id="filter-zona" class="form-control" onchange="onZonaChange()">
+                        <option value="TODOS">Todas as Zonas Eleitorais</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-bairro">3. Bairro / Localidade</label>
+                    <select id="filter-bairro" class="form-control" onchange="onBairroChange()">
+                        <option value="TODOS">Todos os Bairros</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="filter-local">4. Local de Votação (Escola / Colégio / CIEP)</label>
+                    <select id="filter-local" class="form-control" onchange="onLocalChange()">
+                        <option value="TODOS">Todos os Locais de Votação</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Candidate Highlight Banner -->
+        <div id="cand-highlight" class="cand-info-box" style="display:none;">
+            <div class="cand-meta">
+                <div class="cand-badge-num" id="cand-num-badge">0000</div>
+                <div class="cand-details">
+                    <h2 id="cand-name-title">NOME DO CANDIDATO</h2>
+                    <div class="cand-tags">
+                        <span class="cand-tag" id="cand-cargo-tag">Cargo</span>
+                        <span class="cand-tag" id="cand-partido-tag">Partido</span>
+                        <span class="cand-tag" id="cand-rank-tag">Classificação RJ</span>
+                    </div>
+                    <div style="display:flex; gap:8px; margin-top:8px;" class="no-print">
+                        <button class="btn-clear-cand" onclick="saveCurrentSearchToHistory()">⭐ Salvar na Planilha Consolidada</button>
+                        <button class="btn-clear-cand" style="background:rgba(59, 130, 246, 0.4); border-color:#60a5fa;" onclick="compareActiveCandidate()">⚖️ Comparar com Outro Candidato</button>
+                        <button class="btn-clear-cand" onclick="clearCandidateSelection()">✕ Remover filtro de candidato</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cand-stat-main">
+                <div class="stat-val" id="cand-total-votes">0</div>
+                <div class="stat-lbl" id="cand-total-lbl">Votos Totais no RJ</div>
+            </div>
+        </div>
+
+        <!-- Regional Context Banner -->
+        <div id="region-highlight" class="card" style="display:none; background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color:white; margin-bottom:24px; padding:18px 24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <span style="font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#38bdf8; font-weight:800;">📍 Visão Territorial Filtrada</span>
+                    <h2 id="region-title" style="font-size:20px; font-weight:800; margin-top:2px;">TODOS OS MUNICÍPIOS</h2>
+                    <p id="region-subtitle" style="font-size:13px; color:#94a3b8;">Exibindo o ranking e a apuração oficial no local/zona selecionada</p>
+                </div>
+                <div style="display:flex; gap:8px;" class="no-print">
+                    <button class="btn-clear-cand" style="margin:0;" onclick="saveCurrentSearchToHistory()">⭐ Salvar Pesquisa</button>
+                    <button class="btn-clear-cand" style="margin:0;" onclick="resetLocationFilters()">Limpar Localização</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Metrics Grid -->
+        <div class="kpi-grid">
+            <div class="kpi-card blue">
+                <div class="kpi-title" id="kpi-title-votos">Votos no Recorte</div>
+                <div class="kpi-value" id="kpi-votos-recorte">0</div>
+                <div class="kpi-desc" id="kpi-votos-perc">100% da votação apurada</div>
+            </div>
+            <div class="kpi-card green">
+                <div class="kpi-title">Municípios</div>
+                <div class="kpi-value" id="kpi-mun-count">0</div>
+                <div class="kpi-desc">de 92 municípios do RJ</div>
+            </div>
+            <div class="kpi-card green">
+                <div class="kpi-title">Zonas Eleitorais</div>
+                <div class="kpi-value" id="kpi-zona-count">0</div>
+                <div class="kpi-desc">de 165 Zonas no RJ</div>
+            </div>
+            <div class="kpi-card amber">
+                <div class="kpi-title">Bairros</div>
+                <div class="kpi-value" id="kpi-bairro-count">0</div>
+                <div class="kpi-desc">de 1.689 bairros</div>
+            </div>
+            <div class="kpi-card amber">
+                <div class="kpi-title">Locais de Votação</div>
+                <div class="kpi-value" id="kpi-local-count">0</div>
+                <div class="kpi-desc">de 5.034 escolas/locais</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title" id="kpi-title-card6">Principal Reduto (Bairro)</div>
+                <div class="kpi-value" style="font-size:17px;" id="kpi-top-bairro">-</div>
+                <div class="kpi-desc" id="kpi-top-bairro-votos">0 votos</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title" id="kpi-title-card7">Principal Escola / Local</div>
+                <div class="kpi-value" style="font-size:17px;" id="kpi-top-local">-</div>
+                <div class="kpi-desc" id="kpi-top-local-votos">0 votos</div>
+            </div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <div class="card">
+                <div class="chart-header">
+                    <h4 class="chart-title" id="chart-title-1">🏆 Top 10 Bairros com Maior Votação</h4>
+                    <span style="font-size:12px; color:var(--text-muted);" id="chart-sub-1">Votos apurados</span>
+                </div>
+                <div id="chart-bairros" class="bar-chart-container"></div>
+            </div>
+
+            <div class="card">
+                <div class="chart-header">
+                    <h4 class="chart-title" id="chart-title-2">📍 Top 10 Locais de Votação (Escolas)</h4>
+                    <span style="font-size:12px; color:var(--text-muted);" id="chart-sub-2">Urnas apuradas</span>
+                </div>
+                <div id="chart-municipios" class="bar-chart-container"></div>
+            </div>
+        </div>
+
+        <!-- Main Data Table -->
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:12px;">
+                <div style="font-size:15px; font-weight:800; color:var(--text-main);" id="table-header-title">
+                    📍 Detalhamento de Votação (<span id="table-row-count">0</span> registros)
+                </div>
+                <div class="no-print" style="display:flex; gap:8px;">
+                    <button class="btn btn-excel" style="padding:7px 14px; font-size:12px;" onclick="exportCurrentSearchToExcel()">
+                        📥 Gerar Planilha Desta Pesquisa (Excel)
+                    </button>
+                    <button class="btn btn-reset" style="color:var(--text-main); border-color:var(--border);" onclick="saveCurrentSearchToHistory()">
+                        ⭐ Salvar no Caderno
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table id="main-table">
+                    <thead id="main-table-head"></thead>
+                    <tbody id="bairros-table-body"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination no-print">
+                <div id="page-info">Página 1 de 1</div>
+                <div class="page-btns">
+                    <button class="page-btn" id="btn-prev" onclick="changePage(-1)">Anterior</button>
+                    <button class="page-btn" id="btn-next" onclick="changePage(1)">Próximo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: RANKING ESTADUAL -->
+    <section id="section-ranking" class="site-section">
+        <div class="card">
+            <div class="ranking-header">
+                <div>
+                    <h3 style="font-size:18px; font-weight:800;">🏅 Ranking Geral dos Mais Votados do Rio de Janeiro</h3>
+                    <p style="font-size:13px; color:var(--text-muted);">Totalização consolidada das Eleições 2026 no Estado do Rio de Janeiro</p>
+                </div>
+                <div class="no-print" style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="btn btn-reset" id="rank-tab-gov" style="color:var(--text-main); font-weight:800; border-color:var(--accent);" onclick="filterRankingCargo('Governador')">
+                        Governador
+                    </button>
+                    <button class="btn btn-reset" id="rank-tab-sen" style="color:var(--text-muted);" onclick="filterRankingCargo('Senador')">
+                        Senador
+                    </button>
+                    <button class="btn btn-reset" id="rank-tab-fed" style="color:var(--text-muted);" onclick="filterRankingCargo('Deputado Federal')">
+                        Deputado Federal
+                    </button>
+                    <button class="btn btn-reset" id="rank-tab-est" style="color:var(--text-muted);" onclick="filterRankingCargo('Deputado Estadual')">
+                        Deputado Estadual
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:60px;">Posição</th>
+                            <th>Número</th>
+                            <th>Nome do Candidato</th>
+                            <th>Partido</th>
+                            <th>Cargo</th>
+                            <th style="text-align:right;">Votação Total no RJ</th>
+                            <th style="text-align:center; width:130px;">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="full-ranking-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: COMPARADOR DE CANDIDATOS -->
+    <section id="section-compare" class="site-section">
+        <!-- Banner Superior do Comparador -->
+        <div class="compare-header-box">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px;">
+                <div>
+                    <span style="background:rgba(56,189,248,0.2); color:#38bdf8; border:1px solid rgba(56,189,248,0.4); font-size:11px; font-weight:800; padding:2px 8px; border-radius:9999px; text-transform:uppercase;">
+                        ⚖️ Confronto Direto
+                    </span>
+                    <h2 style="font-size:24px; font-weight:900; margin-top:8px; letter-spacing:-0.5px;">
+                        Comparador Multi-Candidatos
+                    </h2>
+                    <p style="font-size:13px; color:#cbd5e1; max-width:800px; margin-top:4px;">
+                        Compare votos, percentuais, colégios e bairros onde cada candidato venceu. Adicione 2 ou mais concorrentes e analise no estado todo ou restrinja a um município, zona ou bairro específico.
+                    </p>
+                </div>
+                <div style="display:flex; gap:8px;" class="no-print">
+                    <button class="btn btn-excel" onclick="exportCompareToExcel()" title="Baixar confronto no Excel">
+                        📥 Baixar Planilha Comparativa
+                    </button>
+                    <button class="btn btn-pdf" onclick="window.print()" title="Imprimir Relatório">
+                        📄 Relatório PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Presets -->
+            <div style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.15); padding-top:14px;" class="no-print">
+                <span style="font-size:11px; font-weight:800; text-transform:uppercase; color:#94a3b8; margin-right:10px;">
+                    Comparações Rápidas em 1 Clique:
+                </span>
+                <div style="display:inline-flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+                    <button class="compare-preset-btn" onclick="loadComparePreset('gov_douglas_paes')">
+                        👔 Douglas Ruas (22) vs Eduardo Paes (55)
+                    </button>
+                    <button class="compare-preset-btn" onclick="loadComparePreset('sen_portinho_benedita')">
+                        🏛️ Portinho (222) vs Benedita da Silva (131)
+                    </button>
+                    <button class="compare-preset-btn" onclick="loadComparePreset('sen_top3')">
+                        🏛️ Trio Senado: Portinho vs Carlos Roberto vs Benedita
+                    </button>
+                    <button class="compare-preset-btn" onclick="loadComparePreset('fed_luizinho_freixo')">
+                        🗳️ Dep. Federal: Dr. Luizinho (1177) vs Marcelo Freixo (1331)
+                    </button>
+                    <button class="compare-preset-btn" onclick="loadComparePreset('fed_top3')">
+                        🗳️ Top 3 Deputados Federais
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel de Seleção de Candidatos e Filtro Territorial -->
+        <div class="card no-print">
+            <h3 style="font-size:16px; font-weight:800; color:var(--text-main); margin-bottom:12px;">
+                👥 Candidatos em Comparação
+            </h3>
+
+            <!-- Candidate Search for Comparison -->
+            <div class="filter-grid" style="grid-template-columns: 2fr 1fr 1fr;">
+                <div class="form-group" style="position:relative;">
+                    <label for="compare-search-input">Buscar e Adicionar Candidato (Nome ou Número)</label>
+                    <input type="text" id="compare-search-input" class="form-control" placeholder="Digite nome ou número do candidato para adicionar..." autocomplete="off" oninput="onCompareSearchInput()" onkeydown="onCompareSearchKeyDown(event)" onfocus="onCompareSearchInput()">
+                    <div id="compare-autocomplete-list" class="autocomplete-dropdown" style="display:none;"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="compare-cargo-filter">Filtrar Lista por Cargo</label>
+                    <select id="compare-cargo-filter" class="form-control" onchange="onCompareCargoFilterChange()">
+                        <option value="TODOS">Todos os Cargos</option>
+                        <option value="Governador">Governador</option>
+                        <option value="Senador">Senador</option>
+                        <option value="Deputado Federal">Deputado Federal</option>
+                        <option value="Deputado Estadual">Deputado Estadual</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="compare-cand-dropdown">Adicionar da Lista</label>
+                    <select id="compare-cand-dropdown" class="form-control" onchange="onCompareCandDropdownSelect()">
+                        <option value="">Selecione para adicionar...</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Selected Candidates Pill Container -->
+            <div id="compare-pills-list" class="compare-cand-grid"></div>
+
+            <div id="compare-empty-prompt" style="display:none; padding:24px; text-align:center; background:#f8fafc; border-radius:8px; border:1px dashed #cbd5e1; margin-top:16px; color:#64748b;">
+                <div style="font-size:24px; margin-bottom:6px;">⚖️</div>
+                <strong>Nenhum candidato selecionado para comparação.</strong>
+                <p style="font-size:12px; margin-top:4px;">Selecione 2 ou mais candidatos acima ou clique em uma das comparações rápidas para começar.</p>
+            </div>
+
+            <!-- Territorial Scope for the Comparison -->
+            <div style="margin-top:20px; border-top:1px dashed var(--border); padding-top:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                    <span style="font-size:12px; font-weight:800; text-transform:uppercase; color:var(--text-muted);">
+                        📍 Recorte Territorial do Confronto
+                    </span>
+                    <button class="pill-btn" style="font-size:11px; padding:4px 10px;" onclick="resetCompareTerritory()">
+                        🔄 Ver Todo o Estado do RJ
+                    </button>
+                </div>
+                <div class="filter-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                    <div class="form-group">
+                        <label for="compare-filter-mun">1. Município</label>
+                        <select id="compare-filter-mun" class="form-control" onchange="onCompareMunChange()">
+                            <option value="TODOS">Todos os 92 Municípios</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="compare-filter-zona">2. Zona Eleitoral</label>
+                        <select id="compare-filter-zona" class="form-control" onchange="onCompareZonaChange()">
+                            <option value="TODOS">Todas as Zonas Eleitorais</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="compare-filter-bairro">3. Bairro / Localidade</label>
+                        <select id="compare-filter-bairro" class="form-control" onchange="onCompareBairroChange()">
+                            <option value="TODOS">Todos os Bairros</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparative KPIs Container -->
+        <div id="compare-kpis-section" class="compare-kpi-container"></div>
+
+        <!-- Comparative Chart & Head-to-Head Summary -->
+        <div id="compare-charts-section" class="charts-grid">
+            <div class="card">
+                <div class="chart-header">
+                    <div>
+                        <h4 class="chart-title" id="compare-chart-title-1">🏆 Top Redutos em Disputa</h4>
+                        <span style="font-size:12px; color:var(--text-muted);" id="compare-chart-sub-1">Votos dos candidatos nas principais áreas</span>
+                    </div>
+                    <div id="compare-chart-legend" style="display:flex; gap:10px; flex-wrap:wrap; font-size:11px; font-weight:700;"></div>
+                </div>
+                <div id="compare-chart-bars" class="grouped-bar-container"></div>
+            </div>
+
+            <div class="card">
+                <div class="chart-header">
+                    <div>
+                        <h4 class="chart-title">📍 Resumo de Vitórias Territoriais</h4>
+                        <span style="font-size:12px; color:var(--text-muted);">Quem lidera mais locais de votação e bairros</span>
+                    </div>
+                </div>
+                <div id="compare-victories-summary" style="display:flex; flex-direction:column; gap:14px; padding:10px 0;"></div>
+            </div>
+        </div>
+
+        <!-- Comparative Detailed Data Table -->
+        <div class="card" id="compare-table-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:12px;">
+                <div>
+                    <h4 style="font-size:16px; font-weight:800; color:var(--text-main);" id="compare-table-title">
+                        📊 Tabela de Votação Comparada (<span id="compare-table-count">0</span> registros)
+                    </h4>
+                    <p style="font-size:12px; color:var(--text-muted);" id="compare-table-subtitle">Exibindo votos nominais lado a lado e margem de vitória</p>
+                </div>
+
+                <div class="no-print" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                    <!-- Aggregation Mode Toggle -->
+                    <span style="font-size:11px; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Agrupar Por:</span>
+                    <button class="compare-toggle-btn active" id="btn-agg-local" onclick="setCompareAggregation('local')">
+                        🏫 Locais (Escolas)
+                    </button>
+                    <button class="compare-toggle-btn" id="btn-agg-bairro" onclick="setCompareAggregation('bairro')">
+                        🏘️ Bairros
+                    </button>
+                    <button class="compare-toggle-btn" id="btn-agg-mun" onclick="setCompareAggregation('mun')">
+                        🏙️ Municípios
+                    </button>
+                    <button class="btn btn-excel" style="padding:7px 14px; font-size:12px; margin-left:8px;" onclick="exportCompareToExcel()">
+                        📥 Baixar Planilha
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Table Search Filter -->
+            <div style="margin-bottom:14px;" class="no-print">
+                <input type="text" id="compare-table-search" class="form-control" placeholder="🔍 Filtrar nesta tabela (digite nome de escola, bairro ou município)..." oninput="onCompareTableSearchInput()">
+            </div>
+
+            <div class="table-responsive">
+                <table id="compare-table">
+                    <thead id="compare-table-head"></thead>
+                    <tbody id="compare-table-body"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination no-print">
+                <div id="compare-page-info">Página 1 de 1</div>
+                <div class="page-btns">
+                    <button class="page-btn" id="btn-compare-prev" onclick="changeComparePage(-1)">Anterior</button>
+                    <button class="page-btn" id="btn-compare-next" onclick="changeComparePage(1)">Próximo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: BASE TSE & DOWNLOADS -->
+    <section id="section-about" class="site-section">
+        <div class="info-grid">
+            <div class="info-box">
+                <h3>🏛️ Fonte dos Dados Oficiais</h3>
+                <p>Todos os dados apresentados neste portal são extraídos diretamente do <strong>Portal de Dados Abertos do Tribunal Superior Eleitoral (TSE)</strong> para as Eleições 2026.</p>
+                <p>O conjunto de dados abrange as <strong>38.738 seções eleitorais</strong>, <strong>5.034 locais de votação</strong> e <strong>165 zonas eleitorais</strong> de todos os 92 municípios do Estado do Rio de Janeiro.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📊 Dicionário Territorial Completo</h3>
+                <p>O portal cruza a base de apuração com o cadastro eleitoral, permitindo filtrar e analisar votos por <strong>Município</strong>, <strong>Zona Eleitoral</strong>, <strong>Bairro</strong> e até <strong>Local de Votação (escola ou colégio específico)</strong>.</p>
+                <p>Os totais de votos nominais e de legenda correspondem com exatidão à apuração oficial homologada pelo tribunal.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📥 Planilhas Consolidadas para Download</h3>
+                <p>Baixe as tabelas prontas para Microsoft Excel ou softwares de BI:</p>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <a href="../Dados_TSE_2026/totais_governador_RJ_2026.csv" class="download-btn" download>
+                        📄 Totais Governador RJ 2026 (CSV)
+                    </a>
+                    <a href="../Dados_TSE_2026/totais_senador_RJ_2026.csv" class="download-btn" download>
+                        📄 Totais Senador RJ 2026 (CSV)
+                    </a>
+                    <a href="../Dados_TSE_2026/totais_deputado_federal_RJ_2026.csv" class="download-btn" download>
+                        📄 Totais Deputado Federal RJ 2026 (CSV)
+                    </a>
+                    <a href="../Dados_TSE_2026/totais_deputado_estadual_RJ_2026.csv" class="download-btn" download>
+                        📄 Totais Deputado Estadual RJ 2026 (CSV)
+                    </a>
+                    <a href="../Dados_TSE_2026/votos_candidato_municipio_bairro_RJ_2026.csv" class="download-btn" download>
+                        📄 Base Completa Candidato x Município x Bairro (CSV)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- Modal: Caderno de Pesquisas Salvas -->
+<div id="modal-history" class="modal-overlay" onclick="closeHistoryModal(event)">
+    <div class="modal-dialog" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h3>📋 Caderno de Pesquisas Realizadas</h3>
+            <button style="background:none; border:none; font-size:20px; cursor:pointer; color:#64748b;" onclick="closeHistoryModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size:13px; color:#64748b; margin-bottom:14px;">
+                Aqui estão salvas as consultas territoriais e pesquisas de candidatos que você realizou nesta sessão. Você pode baixar uma <strong>planilha única consolidada</strong> com todos esses dados reunidos para abrir no Excel.
+            </p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">Item</th>
+                            <th>Data / Hora</th>
+                            <th>Pesquisa / Recorte</th>
+                            <th>Cargo</th>
+                            <th style="text-align:right;">Registros</th>
+                            <th style="text-align:right;">Total Votos</th>
+                            <th style="text-align:center; width:100px;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body"></tbody>
+                </table>
+            </div>
+            <div id="history-empty-msg" style="display:none; text-align:center; padding:32px; color:#94a3b8; font-size:14px;">
+                Nenhuma pesquisa salva ainda. Realize uma consulta e clique em <strong>⭐ Salvar Pesquisa na Planilha</strong> para adicionar ao caderno.
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-reset" style="color:#ef4444; border-color:#fca5a5;" onclick="clearAllHistory()">
+                🗑️ Limpar Caderno
+            </button>
+            <div style="display:flex; gap:10px;">
+                <button class="btn btn-reset" onclick="closeHistoryModal()">
+                    Fechar
+                </div>
+                <button class="btn btn-excel" onclick="exportConsolidatedHistoryToExcel()">
+                    📥 Baixar Planilha Geral Consolidada (.CSV / Excel)
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Toast -->
+<div id="toast" class="toast">
+    <span id="toast-icon">✅</span>
+    <span id="toast-msg">Mensagem</span>
+</div>
+
+<!-- Data File Script -->
+<script src="dados_dashboard_2026.js"></script>
+
+<script>
+// Party Map
+const PARTIDOS = {
+    "10": "REPUBLICANOS", "11": "PP", "12": "PDT", "13": "PT", "14": "PRD",
+    "15": "MDB", "16": "PSTU", "18": "REDE", "19": "PODE", "20": "PSC",
+    "21": "PCB", "22": "PL", "23": "CIDADANIA", "25": "DEM", "27": "DC",
+    "28": "PRTB", "29": "PCO", "30": "NOVO", "33": "MOBILIZA", "35": "PMB",
+    "36": "AGIR", "40": "PSB", "43": "PV", "44": "UNIÃO", "45": "PSDB",
+    "50": "PSOL", "51": "PRD", "55": "PSD", "65": "PCdoB", "70": "AVANTE",
+    "77": "SOLIDARIEDADE", "80": "UP", "95": "BRANCO", "96": "NULO"
+};
+
+function getPartido(num) {
+    if (!num) return "IND";
+    const prefix2 = num.substring(0, 2);
+    return PARTIDOS[prefix2] || ("PARTIDO " + prefix2);
+}
+
+function norm(str) {
+    if (!str) return "";
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().trim();
+}
+
+// Global State
+let allCandidates = [];
+let allMunicipios = [];
+let allBairros = [];
+let allLocais = []; // [ [nome, num, zona, munId, bairroId, end], ... ]
+let votesMap = {}; // candId -> [ [localId, votos], ... ]
+let activeCandidate = null;
+let currentFilteredData = [];
+let currentPage = 1;
+const PAGE_SIZE = 25;
+let currentSort = { col: 'votos', asc: false };
+let currentRankingCargo = 'Governador';
+let activeAutocompleteIndex = -1;
+
+// Relational index maps
+let munZonasMap = new Map();
+let munBairrosMap = new Map();
+let zonaBairrosMap = new Map();
+let munLocaisMap = new Map();
+let zonaLocaisMap = new Map();
+let bairroLocaisMap = new Map();
+let allZonasList = [];
+
+// Saved searches history (persisted in localStorage)
+let savedSearches = [];
+
+window.onload = function() {
+    if (!window.TSE_DATA) {
+        alert("Erro ao carregar dados_dashboard_2026.js. Verifique se o arquivo está na mesma pasta.");
+        return;
+    }
+
+    allCandidates = window.TSE_DATA.candidatos;
+    allMunicipios = window.TSE_DATA.municipios;
+    allBairros = window.TSE_DATA.bairros;
+    allLocais = window.TSE_DATA.locais;
+    votesMap = window.TSE_DATA.votos;
+
+    // Fast indexing across all 5,034 locales (<5ms)
+    const zonasSet = new Set();
+    allLocais.forEach((loc, lId) => {
+        const zona = loc[2];
+        const mId = loc[3];
+        const bId = loc[4];
+
+        zonasSet.add(zona);
+
+        if (!munZonasMap.has(mId)) munZonasMap.set(mId, new Set());
+        munZonasMap.get(mId).add(zona);
+
+        if (!munBairrosMap.has(mId)) munBairrosMap.set(mId, new Set());
+        munBairrosMap.get(mId).add(bId);
+
+        if (!zonaBairrosMap.has(zona)) zonaBairrosMap.set(zona, new Set());
+        zonaBairrosMap.get(zona).add(bId);
+
+        if (!munLocaisMap.has(mId)) munLocaisMap.set(mId, new Set());
+        munLocaisMap.get(mId).add(lId);
+
+        if (!zonaLocaisMap.has(zona)) zonaLocaisMap.set(zona, new Set());
+        zonaLocaisMap.get(zona).add(lId);
+
+        if (!bairroLocaisMap.has(bId)) bairroLocaisMap.set(bId, new Set());
+        bairroLocaisMap.get(bId).add(lId);
+    });
+
+    allZonasList = Array.from(zonasSet).sort((a,b) => a - b);
+
+    // Load saved searches from localStorage
+    try {
+        const stored = localStorage.getItem("tse_pesquisas_rj_2026");
+        if (stored) savedSearches = JSON.parse(stored);
+    } catch(e) { savedSearches = []; }
+    updateHistoryBadge();
+
+    document.getElementById("total-registros-badge").innerText = 
+        `${allCandidates.length.toLocaleString('pt-BR')} Candidatos | ${allMunicipios.length} Municípios | ${allZonasList.length} Zonas | ${allBairros.length.toLocaleString('pt-BR')} Bairros | ${allLocais.length.toLocaleString('pt-BR')} Locais de Votação`;
+
+    initFilters();
+    applyFilters();
+    renderFullRanking();
+    initCompareView();
+
+    document.addEventListener("click", function(e) {
+        if (!e.target.closest("#cand-search-input") && !e.target.closest("#cand-autocomplete-list")) {
+            closeAutocomplete();
+        }
+    });
+};
+
+function initFilters() {
+    // Populate Parties
+    const partidoSelect = document.getElementById("filter-partido");
+    const uniqueParties = new Set();
+    allCandidates.forEach(c => uniqueParties.add(getPartido(c.n)));
+    Array.from(uniqueParties).sort().forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p;
+        opt.innerText = p;
+        partidoSelect.appendChild(opt);
+    });
+
+    // Populate Municipios
+    const munSelect = document.getElementById("filter-municipio");
+    const sortedMun = [...allMunicipios].map((m, idx) => ({ name: m, id: idx })).sort((a, b) => a.name.localeCompare(b.name));
+    sortedMun.forEach(m => {
+        const opt = document.createElement("option");
+        opt.value = m.id;
+        opt.innerText = m.name;
+        munSelect.appendChild(opt);
+    });
+
+    updateZonaDropdown();
+    updateBairroDropdown();
+    updateLocalDropdown();
+    populateCandidateSelectDropdown();
+}
+
+function updateZonaDropdown() {
+    const munSelect = document.getElementById("filter-municipio");
+    const zonaSelect = document.getElementById("filter-zona");
+    const selectedMunId = munSelect.value;
+    const curVal = zonaSelect.value;
+
+    zonaSelect.innerHTML = '<option value="TODOS">Todas as Zonas Eleitorais</option>';
+
+    let zones = allZonasList;
+    if (selectedMunId !== "TODOS") {
+        const mid = parseInt(selectedMunId);
+        const zSet = munZonasMap.get(mid);
+        if (zSet) zones = Array.from(zSet).sort((a,b) => a - b);
+    }
+
+    zones.forEach(z => {
+        const opt = document.createElement("option");
+        opt.value = z;
+        opt.innerText = `Zona ${z.toString().padStart(3, '0')}`;
+        zonaSelect.appendChild(opt);
+    });
+
+    if (curVal !== "TODOS" && zones.includes(parseInt(curVal))) {
+        zonaSelect.value = curVal;
+    }
+}
+
+function updateBairroDropdown() {
+    const munSelect = document.getElementById("filter-municipio");
+    const zonaSelect = document.getElementById("filter-zona");
+    const bairroSelect = document.getElementById("filter-bairro");
+
+    const selectedMunId = munSelect.value;
+    const selectedZona = zonaSelect.value;
+    const curVal = bairroSelect.value;
+
+    bairroSelect.innerHTML = '<option value="TODOS">Todos os Bairros</option>';
+
+    let availableBairroIds = null;
+
+    if (selectedZona !== "TODOS") {
+        const z = parseInt(selectedZona);
+        availableBairroIds = zonaBairrosMap.get(z);
+    } else if (selectedMunId !== "TODOS") {
+        const mid = parseInt(selectedMunId);
+        availableBairroIds = munBairrosMap.get(mid);
+    }
+
+    let bList = [];
+    if (availableBairroIds) {
+        bList = Array.from(availableBairroIds);
+    } else {
+        for (let i = 0; i < allBairros.length; i++) bList.push(i);
+    }
+
+    const sortedBairros = bList
+        .map(id => ({ id: id, name: allBairros[id] }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    sortedBairros.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b.id;
+        opt.innerText = b.name;
+        bairroSelect.appendChild(opt);
+    });
+
+    if (curVal !== "TODOS" && bList.includes(parseInt(curVal))) {
+        bairroSelect.value = curVal;
+    }
+}
+
+function updateLocalDropdown() {
+    const munSelect = document.getElementById("filter-municipio");
+    const zonaSelect = document.getElementById("filter-zona");
+    const bairroSelect = document.getElementById("filter-bairro");
+    const localSelect = document.getElementById("filter-local");
+
+    const selectedMunId = munSelect.value;
+    const selectedZona = zonaSelect.value;
+    const selectedBairro = bairroSelect.value;
+    const curVal = localSelect.value;
+
+    localSelect.innerHTML = '<option value="TODOS">Todos os Locais de Votação</option>';
+
+    let candidateLocais = [];
+    for (let lId = 0; lId < allLocais.length; lId++) {
+        const loc = allLocais[lId];
+        if (selectedMunId !== "TODOS" && loc[3] !== parseInt(selectedMunId)) continue;
+        if (selectedZona !== "TODOS" && loc[2] !== parseInt(selectedZona)) continue;
+        if (selectedBairro !== "TODOS" && loc[4] !== parseInt(selectedBairro)) continue;
+        candidateLocais.push(lId);
+    }
+
+    candidateLocais.sort((a, b) => allLocais[a][0].localeCompare(allLocais[b][0]));
+
+    const displayList = candidateLocais.slice(0, 400);
+
+    displayList.forEach(lId => {
+        const loc = allLocais[lId];
+        const opt = document.createElement("option");
+        opt.value = lId;
+        opt.innerText = `${loc[0]} [Zona ${loc[2]}] - ${allBairros[loc[4]]}`;
+        localSelect.appendChild(opt);
+    });
+
+    if (candidateLocais.length > 400) {
+        const optMore = document.createElement("option");
+        optMore.disabled = true;
+        optMore.innerText = `... e mais ${candidateLocais.length - 400} locais (filtre por bairro ou zona para refinar)`;
+        localSelect.appendChild(optMore);
+    }
+
+    if (curVal !== "TODOS" && candidateLocais.includes(parseInt(curVal))) {
+        localSelect.value = curVal;
+    }
+}
+
+function populateCandidateSelectDropdown() {
+    const cargo = document.getElementById("filter-cargo").value;
+    const candSelect = document.getElementById("filter-candidato");
+
+    candSelect.innerHTML = '<option value="">Todos os Candidatos (ou selecione na lista)</option>';
+
+    let list = allCandidates;
+    if (cargo !== "TODOS") list = list.filter(c => c.c === cargo);
+    list.sort((a, b) => b.tv - a.tv);
+
+    list.slice(0, 100).forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.innerText = `${c.n} - ${c.nm} (${getPartido(c.n)}) [${c.tv.toLocaleString('pt-BR')} votos]`;
+        candSelect.appendChild(opt);
+    });
+
+    if (activeCandidate && list.some(c => c.id === activeCandidate.id)) {
+        candSelect.value = activeCandidate.id;
+    }
+}
+
+// Autocomplete Candidate Search
+function onCandidateSearchInput() {
+    const searchVal = document.getElementById("cand-search-input").value.trim();
+    const dropdown = document.getElementById("cand-autocomplete-list");
+    const clearBtn = document.getElementById("cand-clear-btn");
+    const cargo = document.getElementById("filter-cargo").value;
+
+    clearBtn.style.display = searchVal ? "block" : "none";
+
+    if (!searchVal) {
+        closeAutocomplete();
+        return;
+    }
+
+    const nQuery = norm(searchVal);
+    let matches = allCandidates;
+    if (cargo !== "TODOS") matches = matches.filter(c => c.c === cargo);
+
+    matches = matches.filter(c => {
+        return c.n.includes(nQuery) || norm(c.nm).includes(nQuery);
+    });
+
+    matches.sort((a, b) => b.tv - a.tv);
+
+    if (matches.length === 0) {
+        dropdown.innerHTML = '<div style="padding:12px; font-size:13px; color:#64748b;">Nenhum candidato encontrado com esse nome ou número.</div>';
+        dropdown.style.display = "block";
+        return;
+    }
+
+    dropdown.innerHTML = "";
+    activeAutocompleteIndex = -1;
+
+    matches.slice(0, 15).forEach((c, idx) => {
+        const div = document.createElement("div");
+        div.className = "autocomplete-item";
+        div.innerHTML = `
+            <div>
+                <span class="cand-badge">${c.n}</span>
+                <strong>${c.nm}</strong>
+                <span style="font-size:11px; color:#64748b; margin-left:6px;">${getPartido(c.n)} - ${c.c}</span>
+            </div>
+            <div class="cand-votes">${c.tv.toLocaleString('pt-BR')} votos</div>
+        `;
+        div.onclick = function() {
+            selectCandidate(c);
+            closeAutocomplete();
+        };
+        dropdown.appendChild(div);
+    });
+
+    dropdown.style.display = "block";
+}
+
+function onCandidateSearchKeyDown(e) {
+    const dropdown = document.getElementById("cand-autocomplete-list");
+    const items = dropdown.querySelectorAll(".autocomplete-item");
+
+    if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (items.length > 0) {
+            activeAutocompleteIndex = (activeAutocompleteIndex + 1) % items.length;
+            updateAutocompleteSelection(items);
+        }
+    } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (items.length > 0) {
+            activeAutocompleteIndex = (activeAutocompleteIndex - 1 + items.length) % items.length;
+            updateAutocompleteSelection(items);
+        }
+    } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (activeAutocompleteIndex >= 0 && items[activeAutocompleteIndex]) {
+            items[activeAutocompleteIndex].click();
+        } else if (items.length > 0) {
+            items[0].click();
+        }
+    } else if (e.key === "Escape") {
+        closeAutocomplete();
+    }
+}
+
+function updateAutocompleteSelection(items) {
+    items.forEach((it, idx) => {
+        it.classList.toggle("selected", idx === activeAutocompleteIndex);
+    });
+}
+
+function closeAutocomplete() {
+    document.getElementById("cand-autocomplete-list").style.display = "none";
+    activeAutocompleteIndex = -1;
+}
+
+function selectCandidate(c) {
+    activeCandidate = c;
+    document.getElementById("cand-search-input").value = `${c.n} - ${c.nm} (${getPartido(c.n)})`;
+    document.getElementById("cand-clear-btn").style.display = "block";
+    document.getElementById("filter-cargo").value = c.c;
+    populateCandidateSelectDropdown();
+    document.getElementById("filter-candidato").value = c.id;
+    applyFilters();
+}
+
+function clearCandidateSelection() {
+    activeCandidate = null;
+    document.getElementById("cand-search-input").value = "";
+    document.getElementById("cand-clear-btn").style.display = "none";
+    document.getElementById("filter-candidato").value = "";
+    closeAutocomplete();
+    applyFilters();
+}
+
+function onCandidateSelectDropdown() {
+    const val = document.getElementById("filter-candidato").value;
+    if (!val) {
+        clearCandidateSelection();
+    } else {
+        const c = allCandidates.find(item => item.id === parseInt(val));
+        if (c) selectCandidate(c);
+    }
+}
+
+function onCargoChange() {
+    // When changing cargo, clear any specific candidate to immediately display the ranking and Top 10 charts of that Cargo
+    activeCandidate = null;
+    document.getElementById("cand-search-input").value = "";
+    document.getElementById("cand-clear-btn").style.display = "none";
+    document.getElementById("filter-candidato").value = "";
+    closeAutocomplete();
+    populateCandidateSelectDropdown();
+    applyFilters();
+}
+
+function onMunicipioChange() {
+    updateZonaDropdown();
+    updateBairroDropdown();
+    updateLocalDropdown();
+    applyFilters();
+}
+
+function onZonaChange() {
+    updateBairroDropdown();
+    updateLocalDropdown();
+    applyFilters();
+}
+
+function onBairroChange() {
+    updateLocalDropdown();
+    applyFilters();
+}
+
+function onLocalChange() {
+    applyFilters();
+}
+
+function quickFilterBairro(bairroTarget) {
+    switchNav('dashboard');
+    document.getElementById("filter-municipio").value = "TODOS";
+    document.getElementById("filter-zona").value = "TODOS";
+    document.getElementById("filter-local").value = "TODOS";
+    updateZonaDropdown();
+    updateBairroDropdown();
+
+    const nTarget = norm(bairroTarget);
+    let foundId = -1;
+    for (let i = 0; i < allBairros.length; i++) {
+        if (norm(allBairros[i]) === nTarget) { foundId = i; break; }
+    }
+    if (foundId < 0) {
+        for (let i = 0; i < allBairros.length; i++) {
+            if (norm(allBairros[i]).includes(nTarget)) { foundId = i; break; }
+        }
+    }
+
+    if (foundId >= 0) {
+        document.getElementById("filter-bairro").value = foundId;
+        updateLocalDropdown();
+    }
+    applyFilters();
+}
+
+function quickFilterMun(munTarget) {
+    switchNav('dashboard');
+    document.getElementById("filter-zona").value = "TODOS";
+    document.getElementById("filter-bairro").value = "TODOS";
+    document.getElementById("filter-local").value = "TODOS";
+    const nTarget = norm(munTarget);
+    let foundId = -1;
+    for (let i = 0; i < allMunicipios.length; i++) {
+        if (norm(allMunicipios[i]).includes(nTarget)) { foundId = i; break; }
+    }
+    if (foundId >= 0) {
+        document.getElementById("filter-municipio").value = foundId;
+        updateZonaDropdown();
+        updateBairroDropdown();
+        updateLocalDropdown();
+    }
+    applyFilters();
+}
+
+function resetFilters() {
+    document.getElementById("filter-cargo").value = "TODOS";
+    document.getElementById("filter-partido").value = "TODOS";
+    document.getElementById("filter-municipio").value = "TODOS";
+    document.getElementById("filter-zona").value = "TODOS";
+    document.getElementById("filter-bairro").value = "TODOS";
+    document.getElementById("filter-local").value = "TODOS";
+    activeCandidate = null;
+    document.getElementById("cand-search-input").value = "";
+    document.getElementById("cand-clear-btn").style.display = "none";
+    document.getElementById("filter-candidato").value = "";
+    closeAutocomplete();
+    updateZonaDropdown();
+    updateBairroDropdown();
+    updateLocalDropdown();
+    populateCandidateSelectDropdown();
+    applyFilters();
+}
+
+function resetLocationFilters() {
+    document.getElementById("filter-municipio").value = "TODOS";
+    document.getElementById("filter-zona").value = "TODOS";
+    document.getElementById("filter-bairro").value = "TODOS";
+    document.getElementById("filter-local").value = "TODOS";
+    updateZonaDropdown();
+    updateBairroDropdown();
+    updateLocalDropdown();
+    applyFilters();
+}
+
+// Current Filter Criteria Description
+function getCurrentFilterSummary() {
+    const parts = [];
+    if (activeCandidate) {
+        parts.push(`Candidato: ${activeCandidate.n} - ${activeCandidate.nm} (${getPartido(activeCandidate.n)})`);
+    } else {
+        const cargo = document.getElementById("filter-cargo").value;
+        if (cargo !== "TODOS") parts.push(`Cargo: ${cargo}`);
+        const partido = document.getElementById("filter-partido").value;
+        if (partido !== "TODOS") parts.push(`Partido: ${partido}`);
+    }
+
+    const munVal = document.getElementById("filter-municipio").value;
+    if (munVal !== "TODOS") parts.push(`Município: ${allMunicipios[parseInt(munVal)]}`);
+
+    const zonaVal = document.getElementById("filter-zona").value;
+    if (zonaVal !== "TODOS") parts.push(`Zona: ${zonaVal}`);
+
+    const bairroVal = document.getElementById("filter-bairro").value;
+    if (bairroVal !== "TODOS") parts.push(`Bairro: ${allBairros[parseInt(bairroVal)]}`);
+
+    const localVal = document.getElementById("filter-local").value;
+    if (localVal !== "TODOS") parts.push(`Local: ${allLocais[parseInt(localVal)][0]}`);
+
+    return parts.length > 0 ? parts.join(" | ") : "Todo o Estado do Rio de Janeiro";
+}
+
+// Core Filter Engine
+function applyFilters() {
+    const cargo = document.getElementById("filter-cargo").value;
+    const partido = document.getElementById("filter-partido").value;
+    const munVal = document.getElementById("filter-municipio").value;
+    const zonaVal = document.getElementById("filter-zona").value;
+    const bairroVal = document.getElementById("filter-bairro").value;
+    const localVal = document.getElementById("filter-local").value;
+
+    const filterMunId = munVal === "TODOS" ? null : parseInt(munVal);
+    const filterZona = zonaVal === "TODOS" ? null : parseInt(zonaVal);
+    const filterBairroId = bairroVal === "TODOS" ? null : parseInt(bairroVal);
+    const filterLocalId = localVal === "TODOS" ? null : parseInt(localVal);
+
+    // Update Banner Visibility
+    const candBox = document.getElementById("cand-highlight");
+    const regionBox = document.getElementById("region-highlight");
+
+    if (activeCandidate) {
+        candBox.style.display = "flex";
+        regionBox.style.display = "none";
+        document.getElementById("cand-num-badge").innerText = activeCandidate.n;
+        document.getElementById("cand-name-title").innerText = activeCandidate.nm;
+        document.getElementById("cand-cargo-tag").innerText = activeCandidate.c;
+        document.getElementById("cand-partido-tag").innerText = getPartido(activeCandidate.n);
+
+        const sameCargo = allCandidates.filter(c => c.c === activeCandidate.c).sort((a,b) => b.tv - a.tv);
+        const rank = sameCargo.findIndex(c => c.id === activeCandidate.id) + 1;
+        document.getElementById("cand-rank-tag").innerText = `${rank}º Mais Votado no RJ`;
+        document.getElementById("cand-total-votes").innerText = activeCandidate.tv.toLocaleString('pt-BR');
+    } else {
+        candBox.style.display = "none";
+        const hasLocationFilter = (filterMunId !== null || filterZona !== null || filterBairroId !== null || filterLocalId !== null);
+        if (hasLocationFilter || cargo !== "TODOS") {
+            regionBox.style.display = "block";
+            let rParts = [];
+            if (cargo !== "TODOS") rParts.push(cargo.toUpperCase());
+            if (filterLocalId !== null) rParts.push(allLocais[filterLocalId][0]);
+            if (filterBairroId !== null) rParts.push(allBairros[filterBairroId]);
+            if (filterZona !== null) rParts.push(`Zona ${filterZona}`);
+            if (filterMunId !== null) rParts.push(allMunicipios[filterMunId]);
+            if (!hasLocationFilter) rParts.push("TODO O ESTADO DO RIO DE JANEIRO");
+            document.getElementById("region-title").innerText = rParts.join(" • ");
+            document.getElementById("region-subtitle").innerText = hasLocationFilter
+                ? "Exibindo o ranking e a apuração oficial no local/zona selecionada"
+                : `Exibindo o ranking oficial e os mais votados para ${cargo} em todo o RJ`;
+        } else {
+            regionBox.style.display = "none";
+        }
+    }
+
+    if (activeCandidate) {
+        applyCandidateMode(activeCandidate, filterMunId, filterZona, filterBairroId, filterLocalId);
+    } else {
+        applyRegionalMode(cargo, partido, filterMunId, filterZona, filterBairroId, filterLocalId);
+    }
+}
+
+// Mode 1: Candidate Focused
+function applyCandidateMode(cand, filterMunId, filterZona, filterBairroId, filterLocalId) {
+    const records = votesMap[cand.id] || [];
+    let totalVotesRecorte = 0;
+    const munSet = new Set();
+    const zonaSet = new Set();
+    const bairroSet = new Set();
+    const localSet = new Set();
+
+    const bairroAgg = new Map();
+    const localAgg = new Map();
+
+    currentFilteredData = [];
+
+    records.forEach(r => {
+        const lId = r[0];
+        const v = r[1];
+        const loc = allLocais[lId];
+
+        const lNome = loc[0];
+        const lNum = loc[1];
+        const lZona = loc[2];
+        const lMunId = loc[3];
+        const lBairroId = loc[4];
+        const lEnd = loc[5];
+
+        if (filterMunId !== null && lMunId !== filterMunId) return;
+        if (filterZona !== null && lZona !== filterZona) return;
+        if (filterBairroId !== null && lBairroId !== filterBairroId) return;
+        if (filterLocalId !== null && lId !== filterLocalId) return;
+
+        totalVotesRecorte += v;
+        munSet.add(lMunId);
+        zonaSet.add(lZona);
+        bairroSet.add(lBairroId);
+        localSet.add(lId);
+
+        const bName = allBairros[lBairroId];
+        bairroAgg.set(bName, (bairroAgg.get(bName) || 0) + v);
+        localAgg.set(lNome, (localAgg.get(lNome) || 0) + v);
+
+        currentFilteredData.push({
+            type: 'cand_location',
+            candNum: cand.n,
+            candNome: cand.nm,
+            candCargo: cand.c,
+            candPartido: getPartido(cand.n),
+            localId: lId,
+            nomeLocal: lNome,
+            numLocal: lNum,
+            zona: lZona,
+            mun: allMunicipios[lMunId],
+            bairro: bName,
+            endereco: lEnd,
+            votos: v,
+            pct: cand.tv > 0 ? ((v / cand.tv) * 100) : 0
+        });
+    });
+
+    // Update KPIs
+    document.getElementById("kpi-title-votos").innerText = "Votos do Candidato no Filtro";
+    document.getElementById("kpi-votos-recorte").innerText = totalVotesRecorte.toLocaleString('pt-BR');
+    const pct = cand.tv > 0 ? ((totalVotesRecorte / cand.tv) * 100).toFixed(1) : 0;
+    document.getElementById("kpi-votos-perc").innerText = `${pct}% do total do candidato no RJ`;
+
+    document.getElementById("kpi-mun-count").innerText = munSet.size.toLocaleString('pt-BR');
+    document.getElementById("kpi-zona-count").innerText = zonaSet.size.toLocaleString('pt-BR');
+    document.getElementById("kpi-bairro-count").innerText = bairroSet.size.toLocaleString('pt-BR');
+    document.getElementById("kpi-local-count").innerText = localSet.size.toLocaleString('pt-BR');
+
+    let topBairro = "-", topBairroVotes = 0;
+    bairroAgg.forEach((v, b) => { if (v > topBairroVotes) { topBairroVotes = v; topBairro = b; } });
+    document.getElementById("kpi-title-card6").innerText = "Principal Reduto (Bairro)";
+    document.getElementById("kpi-top-bairro").innerText = topBairro;
+    document.getElementById("kpi-top-bairro-votos").innerText = topBairroVotes.toLocaleString('pt-BR') + " votos";
+
+    let topLocal = "-", topLocalVotes = 0;
+    localAgg.forEach((v, l) => { if (v > topLocalVotes) { topLocalVotes = v; topLocal = l; } });
+    document.getElementById("kpi-title-card7").innerText = "Principal Escola / Local";
+    document.getElementById("kpi-top-local").innerText = topLocal;
+    document.getElementById("kpi-top-local-votos").innerText = topLocalVotes.toLocaleString('pt-BR') + " votos";
+
+    // Chart Titles
+    document.getElementById("chart-title-1").innerText = `🏆 Top Bairros de ${cand.nm}`;
+    document.getElementById("chart-sub-1").innerText = "Votação por bairro";
+    document.getElementById("chart-title-2").innerText = `📍 Top Locais / Escolas de ${cand.nm}`;
+    document.getElementById("chart-sub-2").innerText = "Votação por escola";
+
+    renderCharts(bairroAgg, localAgg);
+
+    // Setup Table Head
+    document.getElementById("table-header-title").innerHTML = 
+        `📍 Votação de <strong>${cand.nm}</strong> por Local de Votação (<span id="table-row-count">${currentFilteredData.length.toLocaleString('pt-BR')}</span> locais)`;
+
+    document.getElementById("main-table-head").innerHTML = `
+        <tr>
+            <th onclick="sortTable('mun')">Município ↕</th>
+            <th onclick="sortTable('zona')">Zona ↕</th>
+            <th onclick="sortTable('bairro')">Bairro ↕</th>
+            <th onclick="sortTable('nomeLocal')">Local de Votação (Escola) ↕</th>
+            <th onclick="sortTable('votos')" style="text-align:right;">Votos do Candidato ↕</th>
+            <th style="text-align:right;">% do Candidato</th>
+            <th style="width:140px;">Representatividade</th>
+        </tr>
+    `;
+
+    currentPage = 1;
+    sortAndRenderTable();
+}
+
+// Mode 2: Regional / Territorial Ranking
+function applyRegionalMode(cargo, partido, filterMunId, filterZona, filterBairroId, filterLocalId) {
+    let candPool = allCandidates;
+    if (cargo !== "TODOS") candPool = candPool.filter(c => c.c === cargo);
+    if (partido !== "TODOS") candPool = candPool.filter(c => getPartido(c.n) === partido);
+
+    const candVotesMap = new Map();
+    const partyVotesMap = new Map();
+    let totalVotesRecorte = 0;
+    const munSet = new Set();
+    const zonaSet = new Set();
+    const bairroSet = new Set();
+    const localSet = new Set();
+
+    const hasLocationFilter = (filterMunId !== null || filterZona !== null || filterBairroId !== null || filterLocalId !== null);
+
+    if (!hasLocationFilter) {
+        // Fast statewide path: calculates in 0.1ms without looping millions of local records
+        candPool.forEach(cand => {
+            const v = cand.tv;
+            if (v > 0) {
+                candVotesMap.set(cand.id, v);
+                totalVotesRecorte += v;
+                const p = getPartido(cand.n);
+                partyVotesMap.set(p, (partyVotesMap.get(p) || 0) + v);
+            }
+        });
+
+        document.getElementById("kpi-mun-count").innerText = allMunicipios.length.toLocaleString('pt-BR');
+        document.getElementById("kpi-zona-count").innerText = allZonasList.length.toLocaleString('pt-BR');
+        document.getElementById("kpi-bairro-count").innerText = allBairros.length.toLocaleString('pt-BR');
+        document.getElementById("kpi-local-count").innerText = allLocais.length.toLocaleString('pt-BR');
+    } else {
+        // Territorial filtered path: filter by location
+        candPool.forEach(cand => {
+            const records = votesMap[cand.id] || [];
+            let cSum = 0;
+            records.forEach(r => {
+                const lId = r[0];
+                const v = r[1];
+                const loc = allLocais[lId];
+
+                const lZona = loc[2];
+                const lMunId = loc[3];
+                const lBairroId = loc[4];
+
+                if (filterMunId !== null && lMunId !== filterMunId) return;
+                if (filterZona !== null && lZona !== filterZona) return;
+                if (filterBairroId !== null && lBairroId !== filterBairroId) return;
+                if (filterLocalId !== null && lId !== filterLocalId) return;
+
+                cSum += v;
+                munSet.add(lMunId);
+                zonaSet.add(lZona);
+                bairroSet.add(lBairroId);
+                localSet.add(lId);
+            });
+
+            if (cSum > 0) {
+                candVotesMap.set(cand.id, cSum);
+                totalVotesRecorte += cSum;
+                const p = getPartido(cand.n);
+                partyVotesMap.set(p, (partyVotesMap.get(p) || 0) + cSum);
+            }
+        });
+
+        document.getElementById("kpi-mun-count").innerText = munSet.size.toLocaleString('pt-BR');
+        document.getElementById("kpi-zona-count").innerText = zonaSet.size.toLocaleString('pt-BR');
+        document.getElementById("kpi-bairro-count").innerText = bairroSet.size.toLocaleString('pt-BR');
+        document.getElementById("kpi-local-count").innerText = localSet.size.toLocaleString('pt-BR');
+    }
+
+    currentFilteredData = [];
+    candVotesMap.forEach((v, cId) => {
+        const c = allCandidates[cId];
+        currentFilteredData.push({
+            type: 'cand_ranking',
+            candId: c.id,
+            num: c.n,
+            nome: c.nm,
+            partido: getPartido(c.n),
+            cargo: c.c,
+            votos: v,
+            votosTotalRJ: c.tv,
+            pct: totalVotesRecorte > 0 ? ((v / totalVotesRecorte) * 100) : 0
+        });
+    });
+
+    // Update KPIs
+    document.getElementById("kpi-title-votos").innerText = (cargo !== "TODOS") ? `Total Votos (${cargo})` : "Total de Votos no Filtro";
+    document.getElementById("kpi-votos-recorte").innerText = totalVotesRecorte.toLocaleString('pt-BR');
+    document.getElementById("kpi-votos-perc").innerText = "Votos nominais apurados";
+
+    const sortedCands = [...currentFilteredData].sort((a,b) => b.votos - a.votos);
+    if (sortedCands.length > 0) {
+        document.getElementById("kpi-title-card6").innerText = "Candidato Mais Votado";
+        document.getElementById("kpi-top-bairro").innerText = sortedCands[0].nome;
+        document.getElementById("kpi-top-bairro-votos").innerText = `${sortedCands[0].votos.toLocaleString('pt-BR')} votos (${sortedCands[0].partido})`;
+    } else {
+        document.getElementById("kpi-title-card6").innerText = "Candidato Mais Votado";
+        document.getElementById("kpi-top-bairro").innerText = "-";
+        document.getElementById("kpi-top-bairro-votos").innerText = "0 votos";
+    }
+
+    const sortedParties = Array.from(partyVotesMap.entries()).sort((a,b) => b[1] - a[1]);
+    if (sortedParties.length > 0) {
+        document.getElementById("kpi-title-card7").innerText = "Partido Mais Votado";
+        document.getElementById("kpi-top-local").innerText = sortedParties[0][0];
+        document.getElementById("kpi-top-local-votos").innerText = `${sortedParties[0][1].toLocaleString('pt-BR')} votos`;
+    } else {
+        document.getElementById("kpi-title-card7").innerText = "Partido Mais Votado";
+        document.getElementById("kpi-top-local").innerText = "-";
+        document.getElementById("kpi-top-local-votos").innerText = "0 votos";
+    }
+
+    // Chart Titles
+    const cargoSuffix = (cargo !== "TODOS") ? ` - ${cargo}` : "";
+    const regSuffix = hasLocationFilter ? "na Região" : "no RJ";
+    document.getElementById("chart-title-1").innerText = `🏆 Top 10 Candidatos Mais Votados${cargoSuffix}`;
+    document.getElementById("chart-sub-1").innerText = `Votação nominal ${regSuffix}`;
+    document.getElementById("chart-title-2").innerText = `🏛️ Top 10 Partidos${cargoSuffix}`;
+    document.getElementById("chart-sub-2").innerText = `Distribuição partidária ${regSuffix}`;
+
+    const topCandChartMap = new Map();
+    sortedCands.slice(0, 10).forEach(c => {
+        topCandChartMap.set(`${c.num} - ${c.nome} (${c.partido})`, c.votos);
+    });
+
+    renderCharts(topCandChartMap, partyVotesMap);
+
+    // Setup Table Head
+    document.getElementById("table-header-title").innerHTML = 
+        `🏅 Ranking dos Candidatos${cargoSuffix} (<span id="table-row-count">${currentFilteredData.length.toLocaleString('pt-BR')}</span> candidatos)`;
+
+    document.getElementById("main-table-head").innerHTML = `
+        <tr>
+            <th style="width:60px;">Pos.</th>
+            <th>Número</th>
+            <th onclick="sortTable('nome')">Nome do Candidato ↕</th>
+            <th onclick="sortTable('partido')">Partido ↕</th>
+            <th onclick="sortTable('cargo')">Cargo ↕</th>
+            <th onclick="sortTable('votos')" style="text-align:right;">Votos no Local ↕</th>
+            <th style="text-align:right;">% do Local</th>
+            <th style="text-align:center; width:130px;">Ação</th>
+        </tr>
+    `;
+
+    currentPage = 1;
+    sortAndRenderTable();
+}
+
+function renderCharts(map1, map2) {
+    const top1 = Array.from(map1.entries()).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const c1 = document.getElementById("chart-bairros");
+    const max1 = top1.length > 0 ? top1[0][1] : 1;
+    let html1 = "";
+    top1.forEach(item => {
+        const pct = ((item[1] / max1) * 100).toFixed(1);
+        html1 += `
+            <div class="bar-row">
+                <div class="bar-label" title="${item[0]}">${item[0]}</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: ${pct}%;"></div>
+                </div>
+                <div class="bar-val">${item[1].toLocaleString('pt-BR')}</div>
+            </div>
+        `;
+    });
+    c1.innerHTML = html1 || '<div style="padding:16px; color:#94a3b8; font-size:12px; text-align:center;">Nenhum dado registrado para o recorte.</div>';
+
+    const top2 = Array.from(map2.entries()).sort((a, b) => b[1] - a[1]).slice(0, 10);
+    const c2 = document.getElementById("chart-municipios");
+    const max2 = top2.length > 0 ? top2[0][1] : 1;
+    let html2 = "";
+    top2.forEach(item => {
+        const pct = ((item[1] / max2) * 100).toFixed(1);
+        html2 += `
+            <div class="bar-row">
+                <div class="bar-label" title="${item[0]}">${item[0]}</div>
+                <div class="bar-track">
+                    <div class="bar-fill" style="width: ${pct}%; background: linear-gradient(90deg, #10b981 0%, #047857 100%);"></div>
+                </div>
+                <div class="bar-val">${item[1].toLocaleString('pt-BR')}</div>
+            </div>
+        `;
+    });
+    c2.innerHTML = html2 || '<div style="padding:16px; color:#94a3b8; font-size:12px; text-align:center;">Nenhum dado registrado para o recorte.</div>';
+}
+
+function sortTable(column) {
+    if (currentSort.col === column) {
+        currentSort.asc = !currentSort.asc;
+    } else {
+        currentSort.col = column;
+        currentSort.asc = (column !== 'votos');
+    }
+    sortAndRenderTable();
+}
+
+function sortAndRenderTable() {
+    currentFilteredData.sort((a, b) => {
+        let valA = a[currentSort.col];
+        let valB = b[currentSort.col];
+        if (typeof valA === 'string') {
+            return currentSort.asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        } else {
+            return currentSort.asc ? valA - valB : valB - valA;
+        }
+    });
+
+    renderTable();
+}
+
+function renderTable() {
+    const tbody = document.getElementById("bairros-table-body");
+    tbody.innerHTML = "";
+
+    document.getElementById("table-row-count").innerText = currentFilteredData.length.toLocaleString('pt-BR');
+
+    const totalPages = Math.ceil(currentFilteredData.length / PAGE_SIZE) || 1;
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const pageRows = currentFilteredData.slice(start, start + PAGE_SIZE);
+
+    if (pageRows.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:24px; color:#64748b;">Nenhum registro encontrado para os filtros selecionados.</td></tr>';
+        return;
+    }
+
+    pageRows.forEach((row, idx) => {
+        if (row.type === 'cand_location') {
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${row.mun}</strong></td>
+                    <td><span class="td-badge">Z-${row.zona}</span></td>
+                    <td>${row.bairro}</td>
+                    <td>
+                        <strong>${row.nomeLocal}</strong>
+                        ${row.endereco ? `<div style="font-size:11px; color:#64748b;">${row.endereco}</div>` : ''}
+                    </td>
+                    <td style="text-align:right; font-weight:700;">${row.votos.toLocaleString('pt-BR')}</td>
+                    <td style="text-align:right;">${row.pct.toFixed(2)}%</td>
+                    <td>
+                        <div style="background:#e2e8f0; height:8px; border-radius:4px; overflow:hidden;">
+                            <div style="background:var(--accent); height:100%; width:${Math.min(100, row.pct * 5)}%;"></div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        } else {
+            const pos = start + idx + 1;
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${pos}º</strong></td>
+                    <td><span class="td-badge">${row.num}</span></td>
+                    <td><strong>${row.nome}</strong></td>
+                    <td>${row.partido}</td>
+                    <td>${row.cargo}</td>
+                    <td style="text-align:right; font-weight:800; color:var(--accent);">${row.votos.toLocaleString('pt-BR')}</td>
+                    <td style="text-align:right;">${row.pct.toFixed(2)}%</td>
+                    <td style="text-align:center;">
+                        <button class="pill-btn" style="background:var(--primary-light); color:var(--accent); border-color:#bfdbfe; font-size:11px; padding:4px 10px;" onclick="selectCandidateById(${row.candId})">
+                            🔍 Ver Redutos
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+    });
+
+    document.getElementById("page-info").innerText = `Página ${currentPage} de ${totalPages}`;
+    document.getElementById("btn-prev").disabled = (currentPage === 1);
+    document.getElementById("btn-next").disabled = (currentPage >= totalPages);
+}
+
+function changePage(delta) {
+    currentPage += delta;
+    renderTable();
+}
+
+function selectCandidateById(candId) {
+    switchNav('dashboard');
+    const c = allCandidates.find(item => item.id === candId);
+    if (c) {
+        selectCandidate(c);
+        window.scrollTo({ top: 180, behavior: 'smooth' });
+    }
+}
+
+function switchNav(section) {
+    document.querySelectorAll('.site-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-link-btn').forEach(b => b.classList.remove('active'));
+
+    document.getElementById(`section-${section}`).classList.add('active');
+    document.getElementById(`nav-btn-${section}`).classList.add('active');
+    if (section === 'compare') {
+        applyCompare();
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function filterRankingCargo(cargo) {
+    currentRankingCargo = cargo;
+    const tabs = ['gov', 'sen', 'fed', 'est'];
+    const cargoMap = { 'gov': 'Governador', 'sen': 'Senador', 'fed': 'Deputado Federal', 'est': 'Deputado Estadual' };
+    tabs.forEach(t => {
+        const el = document.getElementById('rank-tab-' + t);
+        if (el) {
+            const isActive = cargoMap[t] === cargo;
+            el.style.borderColor = isActive ? 'var(--accent)' : 'var(--border)';
+            el.style.fontWeight = isActive ? '800' : '600';
+            el.style.color = isActive ? 'var(--text-main)' : 'var(--text-muted)';
+        }
+    });
+    renderFullRanking();
+}
+
+function renderFullRanking() {
+    const tbody = document.getElementById("full-ranking-table-body");
+    tbody.innerHTML = "";
+
+    const list = allCandidates
+        .filter(c => c.c === currentRankingCargo)
+        .sort((a, b) => b.tv - a.tv)
+        .slice(0, 100);
+
+    list.forEach((c, idx) => {
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>${idx + 1}º</strong></td>
+                <td><span class="td-badge">${c.n}</span></td>
+                <td><strong>${c.nm}</strong></td>
+                <td>${getPartido(c.n)}</td>
+                <td>${c.c}</td>
+                <td style="text-align:right; font-weight:800; color:var(--accent);">${c.tv.toLocaleString('pt-BR')}</td>
+                <td style="text-align:center;">
+                    <button class="pill-btn" style="background:var(--primary-light); color:var(--accent); border-color:#bfdbfe;" onclick="selectCandidateById(${c.id})">
+                        🔍 Ver Bairros e Escolas
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// ==========================================
+// SPREADSHEET EXPORT & SEARCH HISTORY SYSTEM
+// ==========================================
+
+// Helper to trigger browser CSV download with UTF-8 BOM
+function downloadExcelCSV(filename, csvContent) {
+    const bom = "\uFEFF"; // UTF-8 BOM ensures Brazilian Excel displays accents & characters correctly!
+    const blob = new Blob([bom + csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// 1. Export Current Search to Excel Spreadsheet
+function exportCurrentSearchToExcel() {
+    if (!currentFilteredData || currentFilteredData.length === 0) {
+        showToast("⚠️ Nenhum dado encontrado para exportar.");
+        return;
+    }
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('pt-BR');
+    const timeStr = now.toLocaleTimeString('pt-BR');
+    const filterDesc = getCurrentFilterSummary();
+
+    let csv = "";
+    csv += `# RELATORIO ELEITORAL TSE - ELEICOES 2026 (RIO DE JANEIRO)\n`;
+    csv += `# Data de Geracao: ${dateStr} as ${timeStr}\n`;
+    csv += `# Parametros da Pesquisa: ${filterDesc}\n`;
+    csv += `# Total de Registros: ${currentFilteredData.length}\n`;
+    csv += `#\n`;
+
+    if (currentFilteredData[0].type === 'cand_location') {
+        // Candidate Mode Detailed Spreadsheet
+        csv += "Numero;Candidato;Cargo;Partido;Municipio;Zona_Eleitoral;Bairro;Local_Votacao;Endereco;Votos_No_Local;Percentual_Do_Candidato\n";
+        currentFilteredData.forEach(r => {
+            csv += `"${r.candNum}";"${r.candNome}";"${r.candCargo}";"${r.candPartido}";"${r.mun}";${r.zona};"${r.bairro}";"${r.nomeLocal.replace(/"/g, '""')}";"${(r.endereco || '').replace(/"/g, '""')}";${r.votos};${r.pct.toFixed(2)}%\n`;
+        });
+    } else {
+        // Regional Ranking Detailed Spreadsheet
+        csv += "Posicao;Numero;Candidato;Partido;Cargo;Votos_Na_Regiao;Votos_Total_Estado;Percentual_Na_Regiao\n";
+        currentFilteredData.forEach((r, idx) => {
+            csv += `${idx + 1};"${r.num}";"${r.nome}";"${r.partido}";"${r.cargo}";${r.votos};${r.votosTotalRJ};${r.pct.toFixed(2)}%\n`;
+        });
+    }
+
+    const filename = `Pesquisa_Eleicoes_RJ_2026_${activeCandidate ? activeCandidate.n : "Territorial"}_${now.toISOString().slice(0,10)}.csv`;
+    downloadExcelCSV(filename, csv);
+    showToast("📥 Planilha gerada com sucesso!");
+}
+
+// 2. Save Current Search to Search History Notebook
+function saveCurrentSearchToHistory() {
+    if (!currentFilteredData || currentFilteredData.length === 0) {
+        showToast("⚠️ Nenhum dado na pesquisa atual para salvar.");
+        return;
+    }
+
+    const now = new Date();
+    const timeFormatted = now.toLocaleDateString('pt-BR') + " " + now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const filterDesc = getCurrentFilterSummary();
+
+    let totalVotos = 0;
+    currentFilteredData.forEach(r => totalVotos += r.votos);
+
+    const searchEntry = {
+        id: Date.now(),
+        dataHora: timeFormatted,
+        descricao: filterDesc,
+        cargo: activeCandidate ? activeCandidate.c : document.getElementById("filter-cargo").value,
+        candidato: activeCandidate ? `${activeCandidate.n} - ${activeCandidate.nm}` : "Todos (Ranking)",
+        partido: activeCandidate ? getPartido(activeCandidate.n) : document.getElementById("filter-partido").value,
+        totalRegistros: currentFilteredData.length,
+        totalVotos: totalVotos,
+        items: JSON.parse(JSON.stringify(currentFilteredData)) // snapshot
+    };
+
+    savedSearches.unshift(searchEntry);
+    if (savedSearches.length > 50) savedSearches.pop(); // Keep up to 50 searches
+
+    try {
+        localStorage.setItem("tse_pesquisas_rj_2026", JSON.stringify(savedSearches));
+    } catch(e) {}
+
+    updateHistoryBadge();
+    showToast(`⭐ Pesquisa "${filterDesc}" salva no Caderno!`);
+}
+
+function updateHistoryBadge() {
+    const badge = document.getElementById("history-badge");
+    if (badge) badge.innerText = savedSearches.length;
+}
+
+// 3. Modal History UI
+function openHistoryModal() {
+    renderHistoryTable();
+    document.getElementById("modal-history").classList.add("open");
+}
+
+function closeHistoryModal(e) {
+    if (e && e.target && e.target !== document.getElementById("modal-history")) return;
+    document.getElementById("modal-history").classList.remove("open");
+}
+
+function renderHistoryTable() {
+    const tbody = document.getElementById("history-table-body");
+    const emptyMsg = document.getElementById("history-empty-msg");
+    tbody.innerHTML = "";
+
+    if (savedSearches.length === 0) {
+        emptyMsg.style.display = "block";
+        return;
+    }
+    emptyMsg.style.display = "none";
+
+    savedSearches.forEach((s, idx) => {
+        tbody.innerHTML += `
+            <tr>
+                <td><strong>#${savedSearches.length - idx}</strong></td>
+                <td style="font-size:12px; color:#64748b;">${s.dataHora}</td>
+                <td>
+                    <strong>${s.candidato}</strong>
+                    <div style="font-size:11px; color:#64748b;">${s.descricao}</div>
+                </td>
+                <td><span class="td-badge">${s.cargo}</span></td>
+                <td style="text-align:right;">${s.totalRegistros.toLocaleString('pt-BR')}</td>
+                <td style="text-align:right; font-weight:800; color:var(--accent);">${s.totalVotos.toLocaleString('pt-BR')}</td>
+                <td style="text-align:center;">
+                    <button class="pill-btn" style="color:#ef4444; border-color:#fca5a5; font-size:11px; padding:3px 8px;" onclick="removeSearchFromHistory(${s.id})">
+                        Remover
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function removeSearchFromHistory(id) {
+    savedSearches = savedSearches.filter(s => s.id !== id);
+    try {
+        localStorage.setItem("tse_pesquisas_rj_2026", JSON.stringify(savedSearches));
+    } catch(e) {}
+    updateHistoryBadge();
+    renderHistoryTable();
+    showToast("🗑️ Pesquisa removida do caderno.");
+}
+
+function clearAllHistory() {
+    if (savedSearches.length === 0) return;
+    if (!confirm("Deseja realmente apagar todas as pesquisas salvas no caderno?")) return;
+    savedSearches = [];
+    try {
+        localStorage.removeItem("tse_pesquisas_rj_2026");
+    } catch(e) {}
+    updateHistoryBadge();
+    renderHistoryTable();
+    showToast("🗑️ Caderno de pesquisas esvaziado.");
+}
+
+// 4. Export Consolidated Spreadsheet (ALL saved searches compiled into 1 file)
+function exportConsolidatedHistoryToExcel() {
+    if (savedSearches.length === 0) {
+        alert("O caderno de pesquisas está vazio. Realize pesquisas e clique em 'Salvar no Caderno' para gerar a planilha consolidada.");
+        return;
+    }
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('pt-BR');
+    const timeStr = now.toLocaleTimeString('pt-BR');
+
+    let csv = "";
+    csv += `# PLANILHA CONSOLIDADA DAS PESQUISAS REALIZADAS - ELEICOES 2026 RJ\n`;
+    csv += `# Gerado em: ${dateStr} as ${timeStr}\n`;
+    csv += `# Total de Consultas Salvas no Caderno: ${savedSearches.length}\n`;
+    csv += `#\n`;
+
+    // Header
+    csv += "Pesquisa_ID;Data_Hora;Parametros_Pesquisa;Tipo_Registro;Numero;Candidato;Cargo;Partido;Municipio;Zona_Eleitoral;Bairro;Local_Votacao;Endereco;Votos;Percentual\n";
+
+    savedSearches.forEach((s, sIdx) => {
+        const queryId = `PESQUISA_${sIdx + 1}`;
+        const items = s.items || [];
+
+        items.forEach(r => {
+            if (r.type === 'cand_location') {
+                csv += `"${queryId}";"${s.dataHora}";"${s.descricao}";"VotosPorLocal";"${r.candNum}";"${r.candNome}";"${r.candCargo}";"${r.candPartido}";"${r.mun}";${r.zona};"${r.bairro}";"${r.nomeLocal.replace(/"/g, '""')}";"${(r.endereco || '').replace(/"/g, '""')}";${r.votos};${r.pct.toFixed(2)}%\n`;
+            } else {
+                csv += `"${queryId}";"${s.dataHora}";"${s.descricao}";"RankingRegional";"${r.num}";"${r.nome}";"${r.cargo}";"${r.partido}";"";"";"";"";"";${r.votos};${r.pct.toFixed(2)}%\n`;
+            }
+        });
+    });
+
+    const filename = `Planilha_Consolidada_Pesquisas_Eleicoes_RJ_2026_${now.toISOString().slice(0,10)}.csv`;
+    downloadExcelCSV(filename, csv);
+    showToast("📥 Planilha consolidada baixada com sucesso!");
+    closeHistoryModal();
+}
+
+// Toast notification helper
+function showToast(msg) {
+    const toast = document.getElementById("toast");
+    const toastMsg = document.getElementById("toast-msg");
+    toastMsg.innerText = msg;
+    toast.classList.add("show");
+    setTimeout(() => { toast.classList.remove("show"); }, 3000);
+}
+
+// Table CSV button trigger
+function exportTableToCSV() {
+    exportCurrentSearchToExcel();
+}
+
+// ==========================================
+// CANDIDATE COMPARATOR SYSTEM (MULTI-CANDIDATES)
+// ==========================================
+
+const COMPARE_PALETTE = [
+    { key: 'blue', bg: '#2563eb', light: '#eff6ff', text: '#1d4ed8', border: '#93c5fd' },
+    { key: 'green', bg: '#059669', light: '#ecfdf5', text: '#047857', border: '#a7f3d0' },
+    { key: 'purple', bg: '#7c3aed', light: '#f5f3ff', text: '#6d28d9', border: '#ddd6fe' },
+    { key: 'amber', bg: '#d97706', light: '#fffbeb', text: '#b45309', border: '#fde68a' },
+    { key: 'rose', bg: '#e11d48', light: '#fff1f2', text: '#be123c', border: '#fecdd3' },
+    { key: 'cyan', bg: '#0891b2', light: '#ecfeff', text: '#0e7490', border: '#a5f3fc' }
+];
+
+let compareCandidates = [];
+let compareAggregation = 'local'; // 'local' | 'bairro' | 'mun'
+let compareTableSearchQuery = '';
+let compareFilteredData = [];
+let compareCurrentPage = 1;
+const COMPARE_PAGE_SIZE = 25;
+let compareSortCol = 'totalDisputa';
+let compareSortAsc = false;
+let activeCompareAutocompleteIndex = -1;
+
+function initCompareView() {
+    initCompareDropdowns();
+    // Default preset candidates prepared without switching navigation away from dashboard
+    const c1 = allCandidates.find(c => c.c === 'Governador' && c.n === '22');
+    const c2 = allCandidates.find(c => c.c === 'Governador' && c.n === '55');
+    compareCandidates = [c1, c2].filter(Boolean);
+    renderComparePills();
+
+    document.addEventListener("click", function(e) {
+        if (!e.target.closest("#compare-search-input") && !e.target.closest("#compare-autocomplete-list")) {
+            closeCompareAutocomplete();
+        }
+    });
+}
+
+function initCompareDropdowns() {
+    // Municipios
+    const munSelect = document.getElementById("compare-filter-mun");
+    if (munSelect) {
+        munSelect.innerHTML = '<option value="TODOS">Todos os 92 Municípios</option>';
+        const sortedMun = [...allMunicipios].map((m, idx) => ({ name: m, id: idx })).sort((a, b) => a.name.localeCompare(b.name));
+        sortedMun.forEach(m => {
+            const opt = document.createElement("option");
+            opt.value = m.id;
+            opt.innerText = m.name;
+            munSelect.appendChild(opt);
+        });
+    }
+
+    updateCompareZonaDropdown();
+    updateCompareBairroDropdown();
+    populateCompareCandidateDropdown();
+}
+
+function updateCompareZonaDropdown() {
+    const munSelect = document.getElementById("compare-filter-mun");
+    const zonaSelect = document.getElementById("compare-filter-zona");
+    if (!zonaSelect) return;
+    const selectedMunId = munSelect ? munSelect.value : "TODOS";
+    const curVal = zonaSelect.value;
+
+    zonaSelect.innerHTML = '<option value="TODOS">Todas as Zonas Eleitorais</option>';
+
+    let zones = allZonasList;
+    if (selectedMunId !== "TODOS") {
+        const mid = parseInt(selectedMunId);
+        const zSet = munZonasMap.get(mid);
+        if (zSet) zones = Array.from(zSet).sort((a,b) => a - b);
+    }
+
+    zones.forEach(z => {
+        const opt = document.createElement("option");
+        opt.value = z;
+        opt.innerText = `Zona ${z.toString().padStart(3, '0')}`;
+        zonaSelect.appendChild(opt);
+    });
+
+    if (curVal !== "TODOS" && zones.includes(parseInt(curVal))) {
+        zonaSelect.value = curVal;
+    }
+}
+
+function updateCompareBairroDropdown() {
+    const munSelect = document.getElementById("compare-filter-mun");
+    const zonaSelect = document.getElementById("compare-filter-zona");
+    const bairroSelect = document.getElementById("compare-filter-bairro");
+    if (!bairroSelect) return;
+
+    const selectedMunId = munSelect ? munSelect.value : "TODOS";
+    const selectedZona = zonaSelect ? zonaSelect.value : "TODOS";
+    const curVal = bairroSelect.value;
+
+    bairroSelect.innerHTML = '<option value="TODOS">Todos os Bairros</option>';
+
+    let availableBairroIds = null;
+    if (selectedZona !== "TODOS") {
+        const z = parseInt(selectedZona);
+        availableBairroIds = zonaBairrosMap.get(z);
+    } else if (selectedMunId !== "TODOS") {
+        const mid = parseInt(selectedMunId);
+        availableBairroIds = munBairrosMap.get(mid);
+    }
+
+    let bList = [];
+    if (availableBairroIds) {
+        bList = Array.from(availableBairroIds);
+    } else {
+        for (let i = 0; i < allBairros.length; i++) bList.push(i);
+    }
+
+    const sortedBairros = bList
+        .map(id => ({ id: id, name: allBairros[id] }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    sortedBairros.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b.id;
+        opt.innerText = b.name;
+        bairroSelect.appendChild(opt);
+    });
+
+    if (curVal !== "TODOS" && bList.includes(parseInt(curVal))) {
+        bairroSelect.value = curVal;
+    }
+}
+
+function populateCompareCandidateDropdown() {
+    const cargo = document.getElementById("compare-cargo-filter").value;
+    const candSelect = document.getElementById("compare-cand-dropdown");
+    if (!candSelect) return;
+
+    candSelect.innerHTML = '<option value="">Selecione da lista para adicionar...</option>';
+
+    let list = allCandidates;
+    if (cargo !== "TODOS") list = list.filter(c => c.c === cargo);
+    list = [...list].sort((a, b) => b.tv - a.tv);
+
+    list.slice(0, 100).forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.innerText = `${c.n} - ${c.nm} (${getPartido(c.n)}) [${c.tv.toLocaleString('pt-BR')} votos]`;
+        candSelect.appendChild(opt);
+    });
+}
+
+function onCompareCargoFilterChange() {
+    populateCompareCandidateDropdown();
+}
+
+function onCompareCandDropdownSelect() {
+    const select = document.getElementById("compare-cand-dropdown");
+    const val = select.value;
+    if (!val) return;
+    const c = allCandidates.find(item => item.id === parseInt(val));
+    if (c) addCandidateToCompare(c);
+    select.value = "";
+}
+
+function onCompareMunChange() {
+    updateCompareZonaDropdown();
+    updateCompareBairroDropdown();
+    applyCompare();
+}
+
+function onCompareZonaChange() {
+    updateCompareBairroDropdown();
+    applyCompare();
+}
+
+function onCompareBairroChange() {
+    applyCompare();
+}
+
+function resetCompareTerritory() {
+    document.getElementById("compare-filter-mun").value = "TODOS";
+    document.getElementById("compare-filter-zona").value = "TODOS";
+    document.getElementById("compare-filter-bairro").value = "TODOS";
+    updateCompareZonaDropdown();
+    updateCompareBairroDropdown();
+    applyCompare();
+}
+
+// Autocomplete in Compare Search
+function onCompareSearchInput() {
+    const input = document.getElementById("compare-search-input");
+    const dropdown = document.getElementById("compare-autocomplete-list");
+    const cargo = document.getElementById("compare-cargo-filter").value;
+    const val = input.value.trim();
+
+    if (!val) {
+        closeCompareAutocomplete();
+        return;
+    }
+
+    const nQuery = norm(val);
+    let matches = allCandidates;
+    if (cargo !== "TODOS") matches = matches.filter(c => c.c === cargo);
+
+    matches = matches.filter(c => c.n.includes(nQuery) || norm(c.nm).includes(nQuery));
+    matches.sort((a, b) => b.tv - a.tv);
+
+    if (matches.length === 0) {
+        dropdown.innerHTML = '<div style="padding:12px; font-size:13px; color:#64748b;">Nenhum candidato encontrado.</div>';
+        dropdown.style.display = "block";
+        return;
+    }
+
+    dropdown.innerHTML = "";
+    activeCompareAutocompleteIndex = -1;
+
+    matches.slice(0, 15).forEach(c => {
+        const div = document.createElement("div");
+        div.className = "autocomplete-item";
+        div.innerHTML = `
+            <div>
+                <span class="cand-badge">${c.n}</span>
+                <strong>${c.nm}</strong>
+                <span style="font-size:11px; color:#64748b; margin-left:6px;">${getPartido(c.n)} - ${c.c}</span>
+            </div>
+            <div class="cand-votes">${c.tv.toLocaleString('pt-BR')} votos</div>
+        `;
+        div.onclick = function() {
+            addCandidateToCompare(c);
+            input.value = "";
+            closeCompareAutocomplete();
+        };
+        dropdown.appendChild(div);
+    });
+
+    dropdown.style.display = "block";
+}
+
+function onCompareSearchKeyDown(e) {
+    const dropdown = document.getElementById("compare-autocomplete-list");
+    const items = dropdown.querySelectorAll(".autocomplete-item");
+
+    if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (items.length > 0) {
+            activeCompareAutocompleteIndex = (activeCompareAutocompleteIndex + 1) % items.length;
+            updateCompareAutocompleteSelection(items);
+        }
+    } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (items.length > 0) {
+            activeCompareAutocompleteIndex = (activeCompareAutocompleteIndex - 1 + items.length) % items.length;
+            updateCompareAutocompleteSelection(items);
+        }
+    } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (activeCompareAutocompleteIndex >= 0 && items[activeCompareAutocompleteIndex]) {
+            items[activeCompareAutocompleteIndex].click();
+        } else if (items.length > 0) {
+            items[0].click();
+        }
+    } else if (e.key === "Escape") {
+        closeCompareAutocomplete();
+    }
+}
+
+function updateCompareAutocompleteSelection(items) {
+    items.forEach((it, idx) => {
+        it.classList.toggle("selected", idx === activeCompareAutocompleteIndex);
+    });
+}
+
+function closeCompareAutocomplete() {
+    const dropdown = document.getElementById("compare-autocomplete-list");
+    if (dropdown) dropdown.style.display = "none";
+    activeCompareAutocompleteIndex = -1;
+}
+
+// Candidate Multi-selection handlers
+function addCandidateToCompare(c) {
+    if (compareCandidates.some(item => item.id === c.id)) {
+        showToast(`⚠️ Candidato ${c.nm} já está na comparação.`);
+        return;
+    }
+    if (compareCandidates.length >= 6) {
+        showToast("⚠️ Limite de até 6 candidatos simultâneos atingido.");
+        return;
+    }
+
+    compareCandidates.push(c);
+    showToast(`✅ ${c.nm} adicionado à comparação!`);
+    renderComparePills();
+    applyCompare();
+}
+
+function removeCompareCandidate(candId) {
+    compareCandidates = compareCandidates.filter(c => c.id !== candId);
+    renderComparePills();
+    applyCompare();
+}
+
+function clearCompareCandidates() {
+    compareCandidates = [];
+    renderComparePills();
+    applyCompare();
+}
+
+function compareActiveCandidate() {
+    if (!activeCandidate) return;
+    compareCandidates = [activeCandidate];
+    switchNav('compare');
+    renderComparePills();
+    applyCompare();
+    const searchInput = document.getElementById("compare-search-input");
+    if (searchInput) {
+        searchInput.focus();
+    }
+    showToast(`⚖️ ${activeCandidate.nm} selecionado! Agora adicione o adversário para comparar.`);
+}
+
+function addCandidateToCompareById(candId) {
+    const c = allCandidates.find(item => item.id === candId);
+    if (!c) return;
+    switchNav('compare');
+    addCandidateToCompare(c);
+}
+
+function loadComparePreset(preset) {
+    switchNav('compare');
+    if (preset === 'gov_douglas_paes') {
+        const c1 = allCandidates.find(c => c.c === 'Governador' && c.n === '22');
+        const c2 = allCandidates.find(c => c.c === 'Governador' && c.n === '55');
+        compareCandidates = [c1, c2].filter(Boolean);
+    } else if (preset === 'sen_portinho_benedita') {
+        const c1 = allCandidates.find(c => c.c === 'Senador' && c.n === '222');
+        const c2 = allCandidates.find(c => c.c === 'Senador' && c.n === '131');
+        compareCandidates = [c1, c2].filter(Boolean);
+    } else if (preset === 'sen_top3') {
+        const c1 = allCandidates.find(c => c.c === 'Senador' && c.n === '222');
+        const c2 = allCandidates.find(c => c.c === 'Senador' && c.n === '221');
+        const c3 = allCandidates.find(c => c.c === 'Senador' && c.n === '131');
+        compareCandidates = [c1, c2, c3].filter(Boolean);
+    } else if (preset === 'fed_luizinho_freixo') {
+        const c1 = allCandidates.find(c => c.c === 'Deputado Federal' && c.n === '1177');
+        const c2 = allCandidates.find(c => c.c === 'Deputado Federal' && c.n === '1331');
+        compareCandidates = [c1, c2].filter(Boolean);
+    } else if (preset === 'fed_top3') {
+        const fedList = allCandidates.filter(c => c.c === 'Deputado Federal' && c.n !== '95' && c.n !== '96').sort((a,b) => b.tv - a.tv);
+        compareCandidates = fedList.slice(0, 3);
+    }
+
+    renderComparePills();
+    applyCompare();
+}
+
+function setCompareAggregation(mode) {
+    compareAggregation = mode;
+    ['local', 'bairro', 'mun'].forEach(m => {
+        const btn = document.getElementById('btn-agg-' + m);
+        if (btn) btn.classList.toggle('active', m === mode);
+    });
+    applyCompare();
+}
+
+function onCompareTableSearchInput() {
+    compareTableSearchQuery = norm(document.getElementById("compare-table-search").value);
+    compareCurrentPage = 1;
+    filterAndRenderCompareTable();
+}
+
+function renderComparePills() {
+    const list = document.getElementById("compare-pills-list");
+    const emptyPrompt = document.getElementById("compare-empty-prompt");
+    if (!list) return;
+
+    list.innerHTML = "";
+
+    if (compareCandidates.length === 0) {
+        if (emptyPrompt) emptyPrompt.style.display = "block";
+        return;
+    }
+    if (emptyPrompt) emptyPrompt.style.display = "none";
+
+    compareCandidates.forEach((c, idx) => {
+        const theme = COMPARE_PALETTE[idx % COMPARE_PALETTE.length];
+        const div = document.createElement("div");
+        div.className = "compare-cand-pill";
+        div.style.borderColor = theme.border;
+        div.style.backgroundColor = theme.light;
+
+        div.innerHTML = `
+            <div style="display:flex; align-items:center;">
+                <div class="cand-badge-circle" style="background-color:${theme.bg};">
+                    ${c.n}
+                </div>
+                <div>
+                    <div style="font-weight:900; font-size:14px; color:${theme.text};">${c.nm}</div>
+                    <div style="font-size:11px; color:#64748b; font-weight:700;">
+                        ${getPartido(c.n)} • ${c.c} • ${c.tv.toLocaleString('pt-BR')} votos RJ
+                    </div>
+                </div>
+            </div>
+            <button class="remove-cand-btn" onclick="removeCompareCandidate(${c.id})" title="Remover da comparação">✕</button>
+        `;
+        list.appendChild(div);
+    });
+}
+
+// Compute Comparison Logic
+function applyCompare() {
+    const kpiSec = document.getElementById("compare-kpis-section");
+    const chartsSec = document.getElementById("compare-charts-section");
+    const tableCard = document.getElementById("compare-table-card");
+
+    if (compareCandidates.length < 2) {
+        if (kpiSec) kpiSec.style.display = "none";
+        if (chartsSec) chartsSec.style.display = "none";
+        if (tableCard) tableCard.style.display = "none";
+        return;
+    }
+
+    if (kpiSec) kpiSec.style.display = "grid";
+    if (chartsSec) chartsSec.style.display = "grid";
+    if (tableCard) tableCard.style.display = "block";
+
+    const filterMunId = document.getElementById("compare-filter-mun").value === "TODOS" ? null : parseInt(document.getElementById("compare-filter-mun").value);
+    const filterZona = document.getElementById("compare-filter-zona").value === "TODOS" ? null : parseInt(document.getElementById("compare-filter-zona").value);
+    const filterBairroId = document.getElementById("compare-filter-bairro").value === "TODOS" ? null : parseInt(document.getElementById("compare-filter-bairro").value);
+
+    // Map each candidate's votes by localId
+    const candLocalVotes = compareCandidates.map(c => {
+        const map = new Map();
+        const records = votesMap[c.id] || [];
+        records.forEach(r => map.set(r[0], r[1]));
+        return map;
+    });
+
+    // Units map: key -> aggregated entry
+    const unitsMap = new Map();
+    const candidateTotals = new Array(compareCandidates.length).fill(0);
+    const candidateVictories = new Array(compareCandidates.length).fill(0);
+
+    for (let lId = 0; lId < allLocais.length; lId++) {
+        const loc = allLocais[lId];
+        const lZona = loc[2];
+        const lMunId = loc[3];
+        const lBairroId = loc[4];
+
+        if (filterMunId !== null && lMunId !== filterMunId) continue;
+        if (filterZona !== null && lZona !== filterZona) continue;
+        if (filterBairroId !== null && lBairroId !== filterBairroId) continue;
+
+        // Candidate votes in this local
+        const lVotes = candLocalVotes.map(m => m.get(lId) || 0);
+        const lSum = lVotes.reduce((acc, v) => acc + v, 0);
+
+        if (lSum === 0) continue; // no votes among compared candidates
+
+        let key = "";
+        let meta = {};
+
+        if (compareAggregation === 'local') {
+            key = String(lId);
+            meta = {
+                lId: lId,
+                mun: allMunicipios[lMunId],
+                zona: lZona,
+                bairro: allBairros[lBairroId],
+                nome: loc[0],
+                endereco: loc[5]
+            };
+        } else if (compareAggregation === 'bairro') {
+            key = `${lMunId}_${lBairroId}`;
+            meta = {
+                mun: allMunicipios[lMunId],
+                bairro: allBairros[lBairroId],
+                nome: allBairros[lBairroId]
+            };
+        } else { // 'mun'
+            key = String(lMunId);
+            meta = {
+                mun: allMunicipios[lMunId],
+                nome: allMunicipios[lMunId]
+            };
+        }
+
+        if (!unitsMap.has(key)) {
+            unitsMap.set(key, {
+                meta: meta,
+                votes: new Array(compareCandidates.length).fill(0),
+                totalDisputa: 0
+            });
+        }
+
+        const unit = unitsMap.get(key);
+        lVotes.forEach((v, idx) => {
+            unit.votes[idx] += v;
+            unit.totalDisputa += v;
+            candidateTotals[idx] += v;
+        });
+    }
+
+    // Process winner and difference per unit
+    const allRows = [];
+    unitsMap.forEach(unit => {
+        let maxV = -1;
+        let secondV = 0;
+        let winnerIdx = -1;
+        let isTie = false;
+
+        unit.votes.forEach((v, idx) => {
+            if (v > maxV) {
+                secondV = maxV;
+                maxV = v;
+                winnerIdx = idx;
+                isTie = false;
+            } else if (v === maxV && maxV > 0) {
+                isTie = true;
+            } else if (v > secondV) {
+                secondV = v;
+            }
+        });
+
+        unit.winnerIdx = isTie ? -1 : winnerIdx;
+        unit.maxVotes = maxV;
+        unit.diff = maxV - secondV;
+
+        if (!isTie && winnerIdx >= 0) {
+            candidateVictories[winnerIdx]++;
+        }
+
+        allRows.push(unit);
+    });
+
+    // Render Comparative KPIs
+    renderCompareKPIs(candidateTotals, candidateVictories, allRows.length);
+
+    // Render Charts
+    renderCompareCharts(allRows, candidateTotals);
+
+    // Render Table
+    compareFilteredData = allRows;
+    compareCurrentPage = 1;
+    filterAndRenderCompareTable();
+}
+
+function renderCompareKPIs(totals, victories, totalUnits) {
+    const kpiContainer = document.getElementById("compare-kpis-section");
+    kpiContainer.innerHTML = "";
+
+    const totalDisputa = totals.reduce((a, b) => a + b, 0);
+
+    // Find overall leader
+    let maxT = -1, leaderIdx = -1, secondT = 0, isLeaderTie = false;
+    totals.forEach((t, idx) => {
+        if (t > maxT) { secondT = maxT; maxT = t; leaderIdx = idx; isLeaderTie = false; }
+        else if (t === maxT) { isLeaderTie = true; }
+        else if (t > secondT) { secondT = t; }
+    });
+
+    // 1. Leader Highlight Card
+    const leadCard = document.createElement("div");
+    leadCard.className = "compare-stat-card";
+    if (!isLeaderTie && leaderIdx >= 0) {
+        const theme = COMPARE_PALETTE[leaderIdx % COMPARE_PALETTE.length];
+        leadCard.style.borderLeftColor = theme.bg;
+        const diff = maxT - secondT;
+        const diffPct = totalDisputa > 0 ? ((diff / totalDisputa) * 100).toFixed(1) : 0;
+        leadCard.innerHTML = `
+            <div class="kpi-title" style="color:${theme.bg}; font-weight:900;">🏆 Vencedor no Recorte</div>
+            <div class="kpi-value" style="font-size:20px; color:${theme.text};">${compareCandidates[leaderIdx].nm}</div>
+            <div class="kpi-desc" style="font-weight:700; color:#047857;">
+                Vantagem de +${diff.toLocaleString('pt-BR')} votos (${diffPct}%)
+            </div>
+        `;
+    } else {
+        leadCard.innerHTML = `
+            <div class="kpi-title">🏆 Vencedor no Recorte</div>
+            <div class="kpi-value" style="font-size:20px;">Empate Técnico</div>
+            <div class="kpi-desc">Mesma votação entre líderes</div>
+        `;
+    }
+    kpiContainer.appendChild(leadCard);
+
+    // 2. Candidate Cards
+    compareCandidates.forEach((c, idx) => {
+        const theme = COMPARE_PALETTE[idx % COMPARE_PALETTE.length];
+        const v = totals[idx];
+        const pct = totalDisputa > 0 ? ((v / totalDisputa) * 100).toFixed(1) : 0;
+        const vic = victories[idx];
+        const vicPct = totalUnits > 0 ? ((vic / totalUnits) * 100).toFixed(1) : 0;
+
+        const card = document.createElement("div");
+        card.className = "compare-stat-card";
+        card.style.borderLeftColor = theme.bg;
+
+        card.innerHTML = `
+            <div class="kpi-title" style="color:${theme.text}; display:flex; justify-content:space-between;">
+                <span>${c.n} • ${getPartido(c.n)}</span>
+                <span style="background:${theme.bg}; color:white; padding:1px 6px; border-radius:4px; font-size:10px;">${pct}%</span>
+            </div>
+            <div class="kpi-value" style="color:${theme.text}; font-size:22px;">${v.toLocaleString('pt-BR')}</div>
+            <div class="kpi-desc" style="font-size:11px; color:#475569;">
+                Lidera em <strong>${vic.toLocaleString('pt-BR')}</strong> ${compareAggregation === 'local' ? 'colégios' : (compareAggregation === 'bairro' ? 'bairros' : 'municípios')} (${vicPct}%)
+            </div>
+        `;
+        kpiContainer.appendChild(card);
+    });
+
+    // 3. Total Dispute Card
+    const totalCard = document.createElement("div");
+    totalCard.className = "compare-stat-card";
+    totalCard.style.borderLeftColor = "#0f172a";
+    totalCard.innerHTML = `
+        <div class="kpi-title">Votos Totais da Disputa</div>
+        <div class="kpi-value" style="font-size:22px;">${totalDisputa.toLocaleString('pt-BR')}</div>
+        <div class="kpi-desc">${totalUnits.toLocaleString('pt-BR')} ${compareAggregation === 'local' ? 'locais' : (compareAggregation === 'bairro' ? 'bairros' : 'municípios')} computados</div>
+    `;
+    kpiContainer.appendChild(totalCard);
+}
+
+function renderCompareCharts(allRows, candidateTotals) {
+    // 1. Grouped Bar Chart of Top Disputed Areas
+    const chartBars = document.getElementById("compare-chart-bars");
+    const legend = document.getElementById("compare-chart-legend");
+    chartBars.innerHTML = "";
+    legend.innerHTML = "";
+
+    // Legend
+    compareCandidates.forEach((c, idx) => {
+        const theme = COMPARE_PALETTE[idx % COMPARE_PALETTE.length];
+        legend.innerHTML += `
+            <div style="display:flex; align-items:center; gap:5px;">
+                <span style="width:12px; height:12px; background:${theme.bg}; border-radius:3px; display:inline-block;"></span>
+                <span>${c.n} - ${c.nm}</span>
+            </div>
+        `;
+    });
+
+    // Sort by total dispute and take top 10
+    const topDispute = [...allRows].sort((a,b) => b.totalDisputa - a.totalDisputa).slice(0, 10);
+    const maxSingleVote = topDispute.reduce((max, u) => Math.max(max, ...u.votes), 1);
+
+    topDispute.forEach(u => {
+        let label = u.meta.nome;
+        let sub = u.meta.mun + (u.meta.zona ? ` • Z-${u.meta.zona}` : '') + (u.meta.bairro && u.meta.bairro !== u.meta.nome ? ` • ${u.meta.bairro}` : '');
+
+        let barsHtml = "";
+        u.votes.forEach((v, idx) => {
+            const theme = COMPARE_PALETTE[idx % COMPARE_PALETTE.length];
+            const pct = ((v / maxSingleVote) * 100).toFixed(1);
+            barsHtml += `
+                <div class="grouped-single-bar">
+                    <span class="c-name" style="color:${theme.text};">${compareCandidates[idx].n} - ${compareCandidates[idx].nm.split(' ')[0]}</span>
+                    <div class="c-track">
+                        <div class="c-fill" style="width:${pct}%; background:${theme.bg};"></div>
+                    </div>
+                    <span class="c-val" style="color:${theme.text};">${v.toLocaleString('pt-BR')}</span>
+                </div>
+            `;
+        });
+
+        chartBars.innerHTML += `
+            <div class="grouped-bar-item">
+                <div class="grouped-bar-label">
+                    <span>${label}</span>
+                    <span style="font-size:11px; font-weight:600; color:#64748b;">${sub}</span>
+                </div>
+                <div class="grouped-bar-bars">
+                    ${barsHtml}
+                </div>
+            </div>
+        `;
+    });
+
+    // 2. Head-to-Head Victories Summary List
+    const vicSummary = document.getElementById("compare-victories-summary");
+    vicSummary.innerHTML = "";
+
+    const totalDisputa = candidateTotals.reduce((a,b) => a+b, 0);
+
+    compareCandidates.forEach((c, idx) => {
+        const theme = COMPARE_PALETTE[idx % COMPARE_PALETTE.length];
+        const v = candidateTotals[idx];
+        const pct = totalDisputa > 0 ? ((v / totalDisputa) * 100).toFixed(1) : 0;
+
+        vicSummary.innerHTML += `
+            <div style="background:${theme.light}; border:1px solid ${theme.border}; border-radius:8px; padding:12px 16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <div style="font-weight:900; color:${theme.text}; font-size:14px;">
+                        ${c.n} • ${c.nm} (${getPartido(c.n)})
+                    </div>
+                    <div style="font-weight:900; font-size:16px; color:${theme.text};">
+                        ${v.toLocaleString('pt-BR')} votos (${pct}%)
+                    </div>
+                </div>
+                <div style="background:#e2e8f0; height:10px; border-radius:5px; overflow:hidden;">
+                    <div style="background:${theme.bg}; height:100%; width:${pct}%;"></div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function filterAndRenderCompareTable() {
+    let rows = compareFilteredData;
+    if (compareTableSearchQuery) {
+        rows = rows.filter(r => {
+            const text = norm(`${r.meta.nome || ''} ${r.meta.bairro || ''} ${r.meta.mun || ''} ${r.meta.endereco || ''}`);
+            return text.includes(compareTableSearchQuery);
+        });
+    }
+
+    // Sort rows
+    rows.sort((a, b) => {
+        let valA, valB;
+        if (compareSortCol === 'totalDisputa') {
+            valA = a.totalDisputa; valB = b.totalDisputa;
+        } else if (compareSortCol === 'diff') {
+            valA = a.diff; valB = b.diff;
+        } else if (compareSortCol.startsWith('cand_')) {
+            const idx = parseInt(compareSortCol.replace('cand_', ''));
+            valA = a.votes[idx]; valB = b.votes[idx];
+        } else {
+            valA = a.meta[compareSortCol] || '';
+            valB = b.meta[compareSortCol] || '';
+        }
+
+        if (typeof valA === 'string') {
+            return compareSortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        } else {
+            return compareSortAsc ? valA - valB : valB - valA;
+        }
+    });
+
+    renderCompareTable(rows);
+}
+
+function renderCompareTable(rows) {
+    const thead = document.getElementById("compare-table-head");
+    const tbody = document.getElementById("compare-table-body");
+    const countBadge = document.getElementById("compare-table-count");
+
+    countBadge.innerText = rows.length.toLocaleString('pt-BR');
+
+    // Build thead
+    let candHeaders = "";
+    compareCandidates.forEach((c, idx) => {
+        const theme = COMPARE_PALETTE[idx % COMPARE_PALETTE.length];
+        candHeaders += `
+            <th onclick="sortCompareTable('cand_${idx}')" style="text-align:right; color:${theme.text};">
+                ${c.n} - ${c.nm.split(' ')[0]} ↕
+            </th>
+        `;
+    });
+
+    if (compareAggregation === 'local') {
+        thead.innerHTML = `
+            <tr>
+                <th onclick="sortCompareTable('mun')">Município ↕</th>
+                <th onclick="sortCompareTable('zona')">Zona ↕</th>
+                <th onclick="sortCompareTable('bairro')">Bairro ↕</th>
+                <th onclick="sortCompareTable('nome')">Local de Votação (Escola) ↕</th>
+                ${candHeaders}
+                <th onclick="sortCompareTable('totalDisputa')" style="text-align:right;">Total Disputa ↕</th>
+                <th onclick="sortCompareTable('diff')" style="text-align:right;">Diferença ↕</th>
+                <th style="text-align:center; width:130px;">Vencedor</th>
+            </tr>
+        `;
+    } else if (compareAggregation === 'bairro') {
+        thead.innerHTML = `
+            <tr>
+                <th onclick="sortCompareTable('mun')">Município ↕</th>
+                <th onclick="sortCompareTable('bairro')">Bairro ↕</th>
+                ${candHeaders}
+                <th onclick="sortCompareTable('totalDisputa')" style="text-align:right;">Total Disputa ↕</th>
+                <th onclick="sortCompareTable('diff')" style="text-align:right;">Diferença ↕</th>
+                <th style="text-align:center; width:130px;">Vencedor</th>
+            </tr>
+        `;
+    } else { // 'mun'
+        thead.innerHTML = `
+            <tr>
+                <th onclick="sortCompareTable('mun')">Município ↕</th>
+                ${candHeaders}
+                <th onclick="sortCompareTable('totalDisputa')" style="text-align:right;">Total Disputa ↕</th>
+                <th onclick="sortCompareTable('diff')" style="text-align:right;">Diferença ↕</th>
+                <th style="text-align:center; width:130px;">Vencedor</th>
+            </tr>
+        `;
+    }
+
+    // Pagination
+    const totalPages = Math.ceil(rows.length / COMPARE_PAGE_SIZE) || 1;
+    if (compareCurrentPage > totalPages) compareCurrentPage = totalPages;
+    if (compareCurrentPage < 1) compareCurrentPage = 1;
+
+    const start = (compareCurrentPage - 1) * COMPARE_PAGE_SIZE;
+    const pageRows = rows.slice(start, start + COMPARE_PAGE_SIZE);
+
+    tbody.innerHTML = "";
+
+    if (pageRows.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="${compareCandidates.length + 6}" style="text-align:center; padding:24px; color:#64748b;">Nenhum registro encontrado para a busca comparativa.</td></tr>`;
+        return;
+    }
+
+    pageRows.forEach(r => {
+        let candCells = "";
+        r.votes.forEach((v, idx) => {
+            const isWinner = (idx === r.winnerIdx);
+            const theme = COMPARE_PALETTE[idx % COMPARE_PALETTE.length];
+            candCells += `
+                <td style="text-align:right; font-weight:${isWinner ? '900' : '600'}; color:${isWinner ? theme.text : 'inherit'};">
+                    ${v.toLocaleString('pt-BR')}
+                </td>
+            `;
+        });
+
+        let winnerTag = "";
+        if (r.winnerIdx >= 0) {
+            const w = compareCandidates[r.winnerIdx];
+            const theme = COMPARE_PALETTE[r.winnerIdx % COMPARE_PALETTE.length];
+            winnerTag = `<span class="winner-tag" style="background:${theme.light}; color:${theme.text}; border:1px solid ${theme.border};">🏆 ${w.nm.split(' ')[0]}</span>`;
+        } else {
+            winnerTag = `<span class="winner-tag" style="background:#f1f5f9; color:#64748b;">Empate</span>`;
+        }
+
+        if (compareAggregation === 'local') {
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${r.meta.mun}</strong></td>
+                    <td><span class="td-badge">Z-${r.meta.zona}</span></td>
+                    <td>${r.meta.bairro}</td>
+                    <td>
+                        <strong>${r.meta.nome}</strong>
+                        ${r.meta.endereco ? `<div style="font-size:11px; color:#64748b;">${r.meta.endereco}</div>` : ''}
+                    </td>
+                    ${candCells}
+                    <td style="text-align:right; font-weight:700;">${r.totalDisputa.toLocaleString('pt-BR')}</td>
+                    <td style="text-align:right; font-weight:800; color:#047857;">+${r.diff.toLocaleString('pt-BR')}</td>
+                    <td style="text-align:center;">${winnerTag}</td>
+                </tr>
+            `;
+        } else if (compareAggregation === 'bairro') {
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${r.meta.mun}</strong></td>
+                    <td><strong>${r.meta.bairro}</strong></td>
+                    ${candCells}
+                    <td style="text-align:right; font-weight:700;">${r.totalDisputa.toLocaleString('pt-BR')}</td>
+                    <td style="text-align:right; font-weight:800; color:#047857;">+${r.diff.toLocaleString('pt-BR')}</td>
+                    <td style="text-align:center;">${winnerTag}</td>
+                </tr>
+            `;
+        } else {
+            tbody.innerHTML += `
+                <tr>
+                    <td><strong>${r.meta.mun}</strong></td>
+                    ${candCells}
+                    <td style="text-align:right; font-weight:700;">${r.totalDisputa.toLocaleString('pt-BR')}</td>
+                    <td style="text-align:right; font-weight:800; color:#047857;">+${r.diff.toLocaleString('pt-BR')}</td>
+                    <td style="text-align:center;">${winnerTag}</td>
+                </tr>
+            `;
+        }
+    });
+
+    document.getElementById("compare-page-info").innerText = `Página ${compareCurrentPage} de ${totalPages}`;
+    document.getElementById("btn-compare-prev").disabled = (compareCurrentPage === 1);
+    document.getElementById("btn-compare-next").disabled = (compareCurrentPage >= totalPages);
+}
+
+function sortCompareTable(col) {
+    if (compareSortCol === col) {
+        compareSortAsc = !compareSortAsc;
+    } else {
+        compareSortCol = col;
+        compareSortAsc = false;
+    }
+    filterAndRenderCompareTable();
+}
+
+function changeComparePage(delta) {
+    compareCurrentPage += delta;
+    filterAndRenderCompareTable();
+}
+
+// Export Comparison to Excel CSV
+function exportCompareToExcel() {
+    if (compareCandidates.length < 2 || compareFilteredData.length === 0) {
+        showToast("⚠️ Selecione pelo menos 2 candidatos com dados para exportar.");
+        return;
+    }
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('pt-BR');
+    const timeStr = now.toLocaleTimeString('pt-BR');
+
+    const names = compareCandidates.map(c => `${c.nm} (${c.n})`).join(" vs ");
+    let csv = "";
+    csv += `# RELATORIO COMPARATIVO ELEITORAL TSE - ELEICOES 2026 RJ\n`;
+    csv += `# Candidatos Comparados: ${names}\n`;
+    csv += `# Data de Geracao: ${dateStr} as ${timeStr}\n`;
+    csv += `# Agrupamento: ${compareAggregation.toUpperCase()}\n`;
+    csv += `# Total de Registros: ${compareFilteredData.length}\n`;
+    csv += `#\n`;
+
+    // Candidate columns
+    const candCols = compareCandidates.map(c => `Votos_${c.nm.replace(/[^A-Za-z0-9]/g, '_')}_${c.n}`).join(";");
+
+    if (compareAggregation === 'local') {
+        csv += `Municipio;Zona_Eleitoral;Bairro;Local_Votacao;Endereco;${candCols};Total_Disputa;Margem_Votos;Vencedor\n`;
+        compareFilteredData.forEach(r => {
+            const vCols = r.votes.join(";");
+            const winner = r.winnerIdx >= 0 ? compareCandidates[r.winnerIdx].nm : "Empate";
+            csv += `"${r.meta.mun}";${r.meta.zona};"${r.meta.bairro}";"${r.meta.nome.replace(/"/g, '""')}";"${(r.meta.endereco || '').replace(/"/g, '""')}";${vCols};${r.totalDisputa};${r.diff};"${winner}"\n`;
+        });
+    } else if (compareAggregation === 'bairro') {
+        csv += `Municipio;Bairro;${candCols};Total_Disputa;Margem_Votos;Vencedor\n`;
+        compareFilteredData.forEach(r => {
+            const vCols = r.votes.join(";");
+            const winner = r.winnerIdx >= 0 ? compareCandidates[r.winnerIdx].nm : "Empate";
+            csv += `"${r.meta.mun}";"${r.meta.bairro}";${vCols};${r.totalDisputa};${r.diff};"${winner}"\n`;
+        });
+    } else {
+        csv += `Municipio;${candCols};Total_Disputa;Margem_Votos;Vencedor\n`;
+        compareFilteredData.forEach(r => {
+            const vCols = r.votes.join(";");
+            const winner = r.winnerIdx >= 0 ? compareCandidates[r.winnerIdx].nm : "Empate";
+            csv += `"${r.meta.mun}";${vCols};${r.totalDisputa};${r.diff};"${winner}"\n`;
+        });
+    }
+
+    const filename = `Comparativo_Eleicoes_RJ_2026_${now.toISOString().slice(0,10)}.csv`;
+    downloadExcelCSV(filename, csv);
+    showToast("📥 Planilha comparativa exportada com sucesso!");
+}
+</script>
+
+</body>
+</html>
