@@ -1,7 +1,8 @@
 @echo off
-title Servidor Web Local - Portal Eleicoes RJ 2026
+title Servidor Web Local - Portal Eleicoes RJ (2022 & 2026)
 echo ========================================================
-echo   Iniciando Servidor Web Local para o Portal Eleicoes
+echo   Iniciando Servidor Web Local para o Portal Eleicoes RJ
+echo   Base de Dados TSE Oficial: Eleicoes 2022 e 2026
 echo ========================================================
 echo.
 echo O site ficara acessivel no seu navegador e na rede local.
@@ -33,6 +34,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
      } else { ^
        $resp.StatusCode = 404; ^
      }; ^
-     $resp.OutputStream.Close(); ^
+     $resp.Close(); ^
    }"
 pause
